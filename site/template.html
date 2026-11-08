@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>北中医第二课堂 · 活动学分汇总</title>
+<meta name="description" content="北京中医药大学第二课堂学分活动信息汇总，来源标注与核验分级。">
+<style>
+:root{
+  --bg:#f5f6f2; --card:#fff; --ink:#1c2b26; --muted:#6b7a73; --line:#e2e8e4;
+  --primary:#1f6f5c; --primary-soft:#e6f2ee; --accent:#b07d2b;
+  --warn:#b7791f; --danger:#b42318; --gray:#8b9691;
+  --shadow:0 1px 2px rgba(16,40,34,.05),0 8px 24px rgba(16,40,34,.06);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font:15px/1.65 system-ui,-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1180px;margin:0 auto;padding:0 18px}
+
+/* header */
+header{
+  background:linear-gradient(135deg,#12362d 0%,#1f6f5c 58%,#2c8a72 100%);
+  color:#fff;padding:34px 0 26px;
+}
+header .eyebrow{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;opacity:.72}
+header h1{margin:8px 0 6px;font-size:clamp(22px,3.4vw,32px);font-weight:750;letter-spacing:.01em}
+header p{margin:0;opacity:.82;font-size:14px;max-width:720px}
+.meta-row{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:16px;font-size:13px;opacity:.86}
+.meta-row span{display:inline-flex;align-items:center;gap:6px}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:-18px 0 22px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow)}
+.stat b{display:block;font-size:24px;line-height:1.15;font-variant-numeric:tabular-nums}
+.stat span{color:var(--muted);font-size:12.5px}
+
+/* rules */
+.rules{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:22px;box-shadow:var(--shadow)}
+.rules h2{font-size:15px;margin:0 0 12px;display:flex;align-items:center;gap:8px}
+.rules h2 small{font-weight:400;color:var(--muted);font-size:12.5px}
+.rule-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.rule{background:#fbfcf9;border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.rule b{display:block;font-size:13px;color:var(--muted);font-weight:600;margin-bottom:3px}
+.rule span{font-size:14.5px;font-weight:650}
+.rules-src{margin:12px 0 0;font-size:12.5px;color:var(--muted)}
+
+/* toolbar */
+.toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:16px}
+.search{flex:1 1 260px;display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:9px 13px;box-shadow:var(--shadow)}
+.search input{border:0;outline:0;background:transparent;font:inherit;width:100%;color:var(--ink)}
+.search:focus-within{border-color:var(--primary);box-shadow:0 0 0 3px rgba(31,111,92,.12)}
+.search svg{flex:none;opacity:.45}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{
+  border:1px solid var(--line);background:var(--card);color:var(--ink);
+  border-radius:999px;padding:7px 13px;font:inherit;font-size:13px;cursor:pointer;
+  transition:.15s ease;box-shadow:0 1px 1px rgba(16,40,34,.03)
+}
+.chip:hover{border-color:#c9d4ce}
+.chip[aria-pressed="true"]{background:var(--primary);border-color:var(--primary);color:#fff}
+.count{margin:0 0 14px;color:var(--muted);font-size:13px}
+
+/* cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px;align-items:start}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:16px;padding:17px 18px 15px;
+  box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;
+  overflow-wrap:anywhere;transition:transform .15s ease,box-shadow .15s ease
+}
+.card:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(16,40,34,.10)}
+.card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--gray);opacity:.55}
+.card[data-level="A"]::before{background:var(--primary)}
+.card[data-level="B"]::before{background:var(--accent)}
+.card[data-level="C"]::before{background:var(--gray)}
+.card[data-status="ended"]{opacity:.72}
+.card-top{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.badge{font-size:11.5px;padding:3px 9px;border-radius:999px;font-weight:650;letter-spacing:.02em}
+.badge.active{background:var(--primary-soft);color:var(--primary)}
+.badge.ended{background:#eef0ef;color:#6b7a73}
+.badge.unknown{background:#fdf3e3;color:var(--warn)}
+.badge.lv{background:#f2f4f3;color:#5b6b64}
+.badge.lv.A{background:var(--primary-soft);color:var(--primary)}
+.badge.lv.B{background:#fbf0dc;color:var(--accent)}
+.card h3{margin:0;font-size:16.5px;line-height:1.45;font-weight:700}
+.card h3 a{color:var(--ink)}
+.card h3 a:hover{color:var(--primary)}
+.card-meta{color:var(--muted);font-size:12.5px;display:flex;flex-wrap:wrap;gap:4px 12px}
+.credit-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;border-top:1px dashed var(--line);padding-top:10px;margin-top:auto}
+.credit{font-size:13px;background:#f4f7f4;border:1px solid var(--line);border-radius:9px;padding:5px 10px}
+.credit b{font-size:16px;color:var(--primary);font-variant-numeric:tabular-nums}
+.credit.none{color:var(--muted)}
+.deadline{font-size:12.5px;color:var(--muted)}
+.deadline strong{color:var(--danger);font-weight:650}
+.summary{margin:0;font-size:13px;color:#5b6b64;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.evidence{margin:0;font-size:12.5px;color:#55645d;background:#fafbf8;border-left:3px solid #dbe5df;padding:7px 10px;border-radius:0 8px 8px 0}
+.evidence:empty{display:none}
+.open-link{align-self:flex-start;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:5px}
+.open-link::after{content:"↗";font-size:12px}
+
+.empty{text-align:center;padding:60px 20px;color:var(--muted)}
+.empty b{display:block;font-size:17px;color:var(--ink);margin-bottom:6px}
+
+/* footer */
+footer{margin:34px 0 0;padding:26px 0 40px;border-top:1px solid var(--line);color:var(--muted);font-size:12.8px}
+footer h2{font-size:13px;color:var(--ink);margin:0 0 8px}
+footer ul{margin:0 0 16px;padding-left:18px}
+footer li{margin:3px 0}
+.disclaimer{background:#fffaf0;border:1px solid #f0e2c8;border-radius:12px;padding:12px 15px;color:#6b5a36;margin-bottom:16px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:560px){
+  html,body{overflow-x:hidden}
+  .grid{grid-template-columns:1fr}
+  header{padding:26px 0 20px}
+  .stats{grid-template-columns:repeat(2,1fr);margin-top:-12px}
+  .rule-grid{grid-template-columns:1fr}
+  .toolbar{gap:10px}
+  .search{flex:1 1 100%;min-width:0}
+  .chips{gap:6px}
+  .chip{padding:6px 11px;min-height:44px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="eyebrow">BUCM · Second Classroom</div>
+    <h1>北中医第二课堂 · 活动学分汇总</h1>
+    <p>汇总校团委、学院与公众号发布的第二课堂学分活动，标注来源与核验等级。信息仅供参考，学分认定以学校系统为准。</p>
+    <div class="meta-row">
+      <span>📅 数据更新：<b id="updated">—</b></span>
+      <span>🔁 每 3 天自动抓取</span>
+      <span>🩺 每 2 小时健康检查</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="stats" aria-label="数据概览">
+    <div class="stat"><b id="s-total">0</b><span>收录条目</span></div>
+    <div class="stat"><b id="s-active">0</b><span>进行中</span></div>
+    <div class="stat"><b id="s-official">0</b><span>官方来源</span></div>
+    <div class="stat"><b id="s-a">0</b><span>A 级核验</span></div>
+  </section>
+
+  <section class="rules">
+    <h2>📌 学分速查 <small>据公开资料整理，最终以学生手册与第二课堂系统为准</small></h2>
+    <div class="rule-grid">
+      <div class="rule"><b>毕业最低总学分</b><span>（学制年数 − 1）× 2</span></div>
+      <div class="rule"><b>讲座 / 活动</b><span>0.1 分 / 次，综合素质类累计上限 0.5 分</span></div>
+      <div class="rule"><b>志愿服务</b><span>20 小时 = 1 分</span></div>
+      <div class="rule"><b>社会实践</b><span>暑期社会实践 2 分</span></div>
+    </div>
+    <p class="rules-src">来源：
+      <a href="http://mp.weixin.qq.com/s?__biz=Mzg4MTU4NjcxOA==&mid=2247512021&idx=1&sn=9eea7eddfad92e794f661d18aba1ba03" target="_blank" rel="noopener noreferrer">一文读懂本科生第二课堂·综合素质及选修</a>
+      ·
+      <a href="http://mp.weixin.qq.com/s?__biz=Mzg4MTU4NjcxOA==&mid=2247508945&idx=2&sn=6e49f73273c8625f64583daea69dacb6" target="_blank" rel="noopener noreferrer">一文读懂本科生第二课堂·志愿服务</a>
+    </p>
+  </section>
+
+  <div class="toolbar">
+    <label class="search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="搜索活动标题、公众号、证据原句…" autocomplete="off">
+      <span class="sr">搜索</span>
+    </label>
+    <div class="chips" id="status-chips" role="group" aria-label="状态筛选">
+      <button class="chip" data-status="all" aria-pressed="true">全部</button>
+      <button class="chip" data-status="active" aria-pressed="false">进行中</button>
+      <button class="chip" data-status="unknown" aria-pressed="false">待确认</button>
+      <button class="chip" data-status="ended" aria-pressed="false">已结束</button>
+    </div>
+    <div class="chips" id="level-chips" role="group" aria-label="核验等级筛选">
+      <button class="chip" data-level="all" aria-pressed="true">全部等级</button>
+      <button class="chip" data-level="A" aria-pressed="false">A 官方明确</button>
+      <button class="chip" data-level="B" aria-pressed="false">B 官方提及</button>
+      <button class="chip" data-level="C" aria-pressed="false">C 待核实</button>
+    </div>
+    <div class="chips" id="source-chips" role="group" aria-label="来源筛选">
+      <button class="chip" data-source="all" aria-pressed="true">全部来源</button>
+      <button class="chip" data-source="official" aria-pressed="false">官方</button>
+      <button class="chip" data-source="wechat" aria-pressed="false">公众号</button>
+      <button class="chip" data-source="manual" aria-pressed="false">人工</button>
+    </div>
+  </div>
+
+  <p class="count" id="count" aria-live="polite">—</p>
+  <section class="grid" id="grid"></section>
+  <div class="empty" id="empty" hidden><b>没有匹配的条目</b>换个关键词或筛选条件试试。</div>
+
+  <footer>
+    <div class="disclaimer">
+      ⚠️ 免责声明：本页为个人整理的信息汇总，非学校官方发布。活动可能变更、延期或取消，报名与学分认定请以主办方最新通知及《本科生实践活动学分手册》、第二课堂线上系统审核结果为准。
+    </div>
+    <h2>核验等级说明</h2>
+    <ul>
+      <li><b>A 级</b>：官方来源，原文明确写出第二课堂学分数。</li>
+      <li><b>B 级</b>：官方来源或公众号原文提到第二课堂/学分，但未给出明确数值。</li>
+      <li><b>C 级</b>：仅标题或摘要命中关键词，尚未核验，仅作线索。</li>
+    </ul>
+    <h2>数据来源</h2>
+    <ul id="sources"></ul>
+    <p>生成时间：<span id="gen">—</span> · 抓取异常会自动保留上一份可用数据并邮件告警。</p>
+  </footer>
+</main>
+
+<script>
+window.__DEKT_DATA__ = /*__DATA__*/null;
+</script>
+<script>
+(function () {
+  const DATA = window.__DEKT_DATA__ || { items: [], generated_at: "", sources: [] };
+  const items = DATA.items || [];
+  const state = { q: "", status: "all", level: "all", source: "all" };
+  const $ = (id) => document.getElementById(id);
+
+  const STATUS_TEXT = { active: "进行中", ended: "已结束", unknown: "待确认" };
+  const LEVEL_TEXT = { A: "A 官方明确", B: "B 官方提及", C: "C 待核实" };
+  const TYPE_ORDER = ["讲座活动", "志愿服务", "社会实践", "学术科技", "社团活动", "综合素质", "未分类"];
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[c]));
+  }
+
+  function todayStr() {
+    const d = new Date();
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  }
+
+  function fmtDate(s) {
+    s = String(s == null ? "" : s);
+    const m = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+    return m ? m[1] + "-" + m[2] + "-" + m[3] : (s || "日期未知");
+  }
+
+  // 页面静态部署后仍会过截止日期，前端每次加载重算状态
+  function statusOf(it) {
+    const dl = fmtDate(it.deadline);
+    if (/^\d{4}-\d{2}-\d{2}$/.test(dl)) {
+      return dl < todayStr() ? "ended" : "active";
+    }
+    return it.status || "unknown";
+  }
+
+  function safeHref(u) {
+    try {
+      const x = new URL(u, location.href);
+      return (x.protocol === "http:" || x.protocol === "https:") ? u : "#";
+    } catch (e) {
+      return "#";
+    }
+  }
+
+  function matches(it) {
+    if (state.status !== "all" && statusOf(it) !== state.status) return false;
+    if (state.level !== "all" && it.source_level !== state.level) return false;
+    if (state.source !== "all" && it.source_type !== state.source) return false;
+    if (state.q) {
+      const q = state.q.toLowerCase();
+      const blob = [it.title, it.account, it.summary, it.evidence, it.credit_type].join(" ").toLowerCase();
+      if (!blob.includes(q)) return false;
+    }
+    return true;
+  }
+
+  function card(it) {
+    const credit = it.credit
+      ? '<span class="credit"><b>' + esc(it.credit) + '</b> 学分 · ' + esc(it.credit_type || "未分类") + '</span>'
+      : '<span class="credit none">未注明学分数 · ' + esc(it.credit_type || "未分类") + '</span>';
+    const deadline = it.deadline
+      ? '<span class="deadline">截止 <strong>' + esc(fmtDate(it.deadline)) + '</strong></span>'
+      : '';
+    const evidence = it.evidence ? '<p class="evidence">“' + esc(it.evidence) + '”</p>' : '';
+    const summary = it.summary ? '<p class="summary">' + esc(it.summary) + '</p>' : '';
+    const linkText = it.source_type === "wechat" ? "在搜狗微信中查看" : "查看原文";
+    const st = statusOf(it);
+    const href = safeHref(it.url);
+    return '<article class="card" data-level="' + esc(it.source_level) + '" data-status="' + esc(st) + '">'
+      + '<div class="card-top">'
+      + '<span class="badge ' + esc(st) + '">' + esc(STATUS_TEXT[st] || st) + '</span>'
+      + '<span class="badge lv ' + esc(it.source_level) + '">' + esc(LEVEL_TEXT[it.source_level] || it.source_level) + '</span>'
+      + '</div>'
+      + '<h3><a href="' + esc(href) + '" target="_blank" rel="noopener noreferrer">' + esc(it.title) + '</a></h3>'
+      + '<div class="card-meta"><span>' + esc(it.account) + '</span><span>' + esc(fmtDate(it.publish_date)) + '</span></div>'
+      + summary
+      + evidence
+      + '<div class="credit-row">' + credit + deadline + '</div>'
+      + '<a class="open-link" href="' + esc(href) + '" target="_blank" rel="noopener noreferrer">' + linkText + '</a>'
+      + '</article>';
+  }
+
+  function render() {
+    const list = items.filter(matches);
+    $("grid").innerHTML = list.map(card).join("");
+    $("empty").hidden = list.length > 0;
+    $("count").textContent = "共 " + list.length + " 条" + (list.length !== items.length ? "（已筛选，总计 " + items.length + " 条）" : "");
+    $("s-total").textContent = items.length;
+    $("s-active").textContent = items.filter((i) => statusOf(i) === "active").length;
+    $("s-official").textContent = items.filter((i) => i.source_type === "official").length;
+    $("s-a").textContent = items.filter((i) => i.source_level === "A").length;
+  }
+
+  document.querySelectorAll("#status-chips .chip").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      state.status = btn.dataset.status;
+      document.querySelectorAll("#status-chips .chip").forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+      render();
+    });
+  });
+  document.querySelectorAll("#level-chips .chip").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      state.level = btn.dataset.level;
+      document.querySelectorAll("#level-chips .chip").forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+      render();
+    });
+  });
+  document.querySelectorAll("#source-chips .chip").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      state.source = btn.dataset.source;
+      document.querySelectorAll("#source-chips .chip").forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+      render();
+    });
+  });
+  $("q").addEventListener("input", (e) => { state.q = e.target.value.trim(); render(); });
+
+  $("updated").textContent = DATA.generated_at ? fmtDate(DATA.generated_at) : "尚未生成";
+  $("gen").textContent = DATA.generated_at || "—";
+  const sources = DATA.sources || [];
+  $("sources").innerHTML = sources.length
+    ? sources.map((s) => "<li>" + esc(s) + "</li>").join("")
+    : "<li>校团委官网、微信公众号（搜狗微信检索）</li>";
+
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+"""抓取校团委官网通知/活动，提取第二课堂学分相关信息。"""
+from __future__ import annotations
+
+import re
+import time
+import urllib.parse
+from datetime import date
+
+from common import (
+    DATA_DIR,
+    clean_title,
+    compute_status,
+    decode_html,
+    extract_credit,
+    extract_credit_type,
+    extract_deadline,
+    fetch,
+    load_config,
+    safe_url,
+    setup_logger,
+    strip_tags,
+    write_json,
+)
+
+log = setup_logger("crawl_official")
+
+LIST_ITEM_RE = re.compile(r"<li>(.*?)</li>", re.S)
+TITLE_RE = re.compile(r'<p class="[^"]*gpArticleTitle[^"]*"[^>]*>(.*?)</p>', re.S)
+DATE_RE = re.compile(r'gpArticleDate[^"]*"[^>]*>\s*(\d{4}-\d{2}-\d{2})')
+HREF_RE = re.compile(r'href="([^"]+)"')
+
+
+def page_url(base: str, page_index: int) -> str:
+    if page_index == 0:
+        return base
+    if "index.htm" in base:
+        return base.replace("index.htm", f"index{page_index}.htm")
+    if base.endswith("/"):
+        return f"{base}index{page_index}.htm"
+    return f"{base}/index{page_index}.htm"
+
+
+def parse_list(html: str) -> list[tuple[str, str, str]]:
+    items = []
+    for block in re.findall(r"<li[^>]*>(.*?)</li>", html, re.S):
+        tm = TITLE_RE.search(block)
+        dm = DATE_RE.search(block)
+        hm = HREF_RE.search(block)
+        if not (tm and dm and hm):
+            continue
+        title = clean_title(re.sub(r"<[^>]+>", "", tm.group(1)))
+        items.append((title, dm.group(1), hm.group(1)))
+    return items
+
+
+def extract_article_text(html: str) -> str:
+    # 只取正文容器；找不到就返回空串，避免把导航/页脚里的“第二课堂”当正文
+    m = re.search(r'<div[^>]*class="[^"]*gp-article[^"]*"[^>]*>', html)
+    if not m:
+        return ""
+    return strip_tags(html[m.end():m.end() + 60000])
+
+
+def is_relevant(title: str, text: str) -> bool:
+    """保留与第二课堂/可参与活动相关的条目，过滤纯公示和评奖结果。"""
+    if any(x in title for x in ("公示", "名单", "评选", "推荐", "喜报")):
+        return False
+    blob = title + "\n" + text
+    if "第二课堂" in blob or "学分" in blob:
+        return True
+    activity_words = ("讲座", "报告会", "沙龙", "论坛", "竞赛", "大赛",
+                      "培训", "招募", "报名", "社会实践", "志愿服务", "活动")
+    return any(word in title for word in activity_words)
+
+
+def build_item(title: str, pub: str, url: str, text: str, source_name: str) -> dict:
+    credit, evidence = extract_credit(text)
+    deadline = extract_deadline(text, pub)
+    level = "C"
+    if credit and "第二课堂" in text:
+        level = "A"
+    elif "第二课堂" in (text + title) or "学分" in (text + title):
+        level = "B"
+    return {
+        "title": title,
+        "account": source_name,
+        "publish_date": pub,
+        "url": safe_url(url),
+        "summary": re.sub(r"\s+", " ", text)[:180],
+        "credit": credit,
+        "credit_type": extract_credit_type(text + title),
+        "deadline": deadline,
+        "status": compute_status(deadline, pub),
+        "source_level": level,
+        "source_type": "official",
+        "evidence": evidence or "",
+        "verified_at": date.today().isoformat(),
+    }
+
+
+def crawl() -> list[dict]:
+    cfg = load_config()
+    cutoff = date.fromisoformat(cfg["cutoff_date"][:10])
+    results: list[dict] = []
+    seen_urls: set[str] = set()
+
+    for source in cfg["official_sources"]:
+        base = source["url"]
+        name = source["name"]
+        for p in range(int(source.get("pages", 2))):
+            url = page_url(base, p)
+            try:
+                html = decode_html(fetch(url))
+            except Exception as exc:  # noqa: BLE001
+                log.warning("列表抓取失败 %s: %s", url, exc)
+                break
+            entries = parse_list(html)
+            if not entries:
+                break
+            new_in_page = 0
+            for title, pub, href in entries:
+                try:
+                    pub_date = date.fromisoformat(pub)
+                except ValueError:
+                    continue
+                if pub_date < cutoff:
+                    continue
+                full_url = urllib.parse.urljoin(url, href)
+                if not full_url.lower().startswith(("http://", "https://")):
+                    continue
+                if full_url in seen_urls:
+                    continue
+                seen_urls.add(full_url)
+                try:
+                    detail_html = decode_html(fetch(full_url, referer=url))
+                except Exception as exc:  # noqa: BLE001
+                    log.warning("详情抓取失败 %s: %s", full_url, exc)
+                    continue
+                text = extract_article_text(detail_html)
+                if not is_relevant(title, text):
+                    continue
+                results.append(build_item(title, pub, full_url, text, name))
+                new_in_page += 1
+                time.sleep(0.4)
+            log.info("%s 第%d页 新增 %d 条", name, p + 1, new_in_page)
+            time.sleep(0.6)
+
+    # 去重（同一篇可能出现在多个栏目）
+    dedup: dict[str, dict] = {}
+    for item in results:
+        key = re.sub(r"\W+", "", item["title"])[:40]
+        if key not in dedup:
+            dedup[key] = item
+    return list(dedup.values())
+
+
+def main() -> None:
+    items = crawl()
+    if not items:
+        log.error("官网抓取结果为空，保留上一份数据（不覆盖）")
+        raise SystemExit(2)
+    write_json(DATA_DIR / "official.json", {
+        "generated_at": date.today().isoformat(),
+        "count": len(items),
+        "items": items,
+    })
+    log.info("官网抓取完成，共 %d 条", len(items))
+
+
+if __name__ == "__main__":
+    main()

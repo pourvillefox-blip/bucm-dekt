@@ -1,0 +1,11 @@
+config.json
+logs/
+*.bak
+data/*.bak
+data/alert_state.json
+data/health.json
+data/last_update.json
+data/*.png
+data/*.html
+__pycache__/
+*.pyc

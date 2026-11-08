@@ -1,0 +1,44 @@
+{
+  "note": "人工核验补充：把在微信里看到的第二课堂活动原文加到这里。字段同 items。source_type 固定写 manual。",
+  "items": [
+    {
+      "title": "「杏林拾遗录」主题学术展，正式开展！",
+      "account": "微信公众号（待确认）",
+      "publish_date": null,
+      "url": "http://mp.weixin.qq.com/s?__biz=MzU1MTc2NDcwOQ==&mid=2247532086&idx=1&sn=8a8aff783807ccbbce254d67e27c081c",
+      "summary": "面向全校学生征集学科冷知识投稿，入选作品可获第二课堂学分并制成宣传海报。",
+      "credit": "0.1",
+      "credit_type": "综合素质",
+      "deadline": "2026-04-25",
+      "source_level": "B",
+      "source_type": "manual",
+      "evidence": "投稿成功者可获得第二课堂0.1学分"
+    },
+    {
+      "title": "决赛观众招募｜可以只为了学分来，但来了你可能真会被震到",
+      "account": "微信公众号（待确认）",
+      "publish_date": null,
+      "url": "http://mp.weixin.qq.com/s?__biz=Mzg5NTY2NzQ3Nw==&mid=2247485550&idx=1&sn=948c26c546b86ecb1712ade1617071df",
+      "summary": "决赛现场观众招募，参与可获第二课堂学分。",
+      "credit": "0.1",
+      "credit_type": "综合素质",
+      "deadline": null,
+      "source_level": "B",
+      "source_type": "manual",
+      "evidence": "标题及摘要标注可获得第二课堂0.1学分（需以原文为准）"
+    },
+    {
+      "title": "清风茶社&蝉衣汉服社“茶香霓裳·杏林春宴”活动通知",
+      "account": "bucm社联（待确认）",
+      "publish_date": null,
+      "url": "http://mp.weixin.qq.com/s?__biz=MzAxOTM2OTk3Nw==&mid=2650796450&idx=1&sn=c4b35e3d0e14fedc958e6cdebae3f421",
+      "summary": "茶社与汉服社联合活动，完整参与可认证第二课堂综合素质学分。",
+      "credit": "0.1",
+      "credit_type": "综合素质",
+      "deadline": null,
+      "source_level": "B",
+      "source_type": "manual",
+      "evidence": "完整参与可认证第二课堂综合素质0.1学分"
+    }
+  ]
+}

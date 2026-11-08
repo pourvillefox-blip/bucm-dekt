@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>北中医第二课堂 · 活动学分汇总</title>
+<meta name="description" content="北京中医药大学第二课堂学分活动信息汇总，来源标注与核验分级。">
+<style>
+:root{
+  --bg:#f5f6f2; --card:#fff; --ink:#1c2b26; --muted:#6b7a73; --line:#e2e8e4;
+  --primary:#1f6f5c; --primary-soft:#e6f2ee; --accent:#b07d2b;
+  --warn:#b7791f; --danger:#b42318; --gray:#8b9691;
+  --shadow:0 1px 2px rgba(16,40,34,.05),0 8px 24px rgba(16,40,34,.06);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font:15px/1.65 system-ui,-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1180px;margin:0 auto;padding:0 18px}
+
+/* header */
+header{
+  background:linear-gradient(135deg,#12362d 0%,#1f6f5c 58%,#2c8a72 100%);
+  color:#fff;padding:34px 0 26px;
+}
+header .eyebrow{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;opacity:.72}
+header h1{margin:8px 0 6px;font-size:clamp(22px,3.4vw,32px);font-weight:750;letter-spacing:.01em}
+header p{margin:0;opacity:.82;font-size:14px;max-width:720px}
+.meta-row{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:16px;font-size:13px;opacity:.86}
+.meta-row span{display:inline-flex;align-items:center;gap:6px}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:-18px 0 22px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow)}
+.stat b{display:block;font-size:24px;line-height:1.15;font-variant-numeric:tabular-nums}
+.stat span{color:var(--muted);font-size:12.5px}
+
+/* rules */
+.rules{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:22px;box-shadow:var(--shadow)}
+.rules h2{font-size:15px;margin:0 0 12px;display:flex;align-items:center;gap:8px}
+.rules h2 small{font-weight:400;color:var(--muted);font-size:12.5px}
+.rule-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.rule{background:#fbfcf9;border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.rule b{display:block;font-size:13px;color:var(--muted);font-weight:600;margin-bottom:3px}
+.rule span{font-size:14.5px;font-weight:650}
+.rules-src{margin:12px 0 0;font-size:12.5px;color:var(--muted)}
+
+/* toolbar */
+.toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:16px}
+.search{flex:1 1 260px;display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:9px 13px;box-shadow:var(--shadow)}
+.search input{border:0;outline:0;background:transparent;font:inherit;width:100%;color:var(--ink)}
+.search:focus-within{border-color:var(--primary);box-shadow:0 0 0 3px rgba(31,111,92,.12)}
+.search svg{flex:none;opacity:.45}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{
+  border:1px solid var(--line);background:var(--card);color:var(--ink);
+  border-radius:999px;padding:7px 13px;font:inherit;font-size:13px;cursor:pointer;
+  transition:.15s ease;box-shadow:0 1px 1px rgba(16,40,34,.03)
+}
+.chip:hover{border-color:#c9d4ce}
+.chip[aria-pressed="true"]{background:var(--primary);border-color:var(--primary);color:#fff}
+.count{margin:0 0 14px;color:var(--muted);font-size:13px}
+
+/* cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px;align-items:start}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:16px;padding:17px 18px 15px;
+  box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;
+  overflow-wrap:anywhere;transition:transform .15s ease,box-shadow .15s ease
+}
+.card:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(16,40,34,.10)}
+.card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--gray);opacity:.55}
+.card[data-level="A"]::before{background:var(--primary)}
+.card[data-level="B"]::before{background:var(--accent)}
+.card[data-level="C"]::before{background:var(--gray)}
+.card[data-status="ended"]{opacity:.72}
+.card-top{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.badge{font-size:11.5px;padding:3px 9px;border-radius:999px;font-weight:650;letter-spacing:.02em}
+.badge.active{background:var(--primary-soft);color:var(--primary)}
+.badge.ended{background:#eef0ef;color:#6b7a73}
+.badge.unknown{background:#fdf3e3;color:var(--warn)}
+.badge.lv{background:#f2f4f3;color:#5b6b64}
+.badge.lv.A{background:var(--primary-soft);color:var(--primary)}
+.badge.lv.B{background:#fbf0dc;color:var(--accent)}
+.card h3{margin:0;font-size:16.5px;line-height:1.45;font-weight:700}
+.card h3 a{color:var(--ink)}
+.card h3 a:hover{color:var(--primary)}
+.card-meta{color:var(--muted);font-size:12.5px;display:flex;flex-wrap:wrap;gap:4px 12px}
+.credit-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;border-top:1px dashed var(--line);padding-top:10px;margin-top:auto}
+.credit{font-size:13px;background:#f4f7f4;border:1px solid var(--line);border-radius:9px;padding:5px 10px}
+.credit b{font-size:16px;color:var(--primary);font-variant-numeric:tabular-nums}
+.credit.none{color:var(--muted)}
+.deadline{font-size:12.5px;color:var(--muted)}
+.deadline strong{color:var(--danger);font-weight:650}
+.summary{margin:0;font-size:13px;color:#5b6b64;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.evidence{margin:0;font-size:12.5px;color:#55645d;background:#fafbf8;border-left:3px solid #dbe5df;padding:7px 10px;border-radius:0 8px 8px 0}
+.evidence:empty{display:none}
+.open-link{align-self:flex-start;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:5px}
+.open-link::after{content:"↗";font-size:12px}
+
+.empty{text-align:center;padding:60px 20px;color:var(--muted)}
+.empty b{display:block;font-size:17px;color:var(--ink);margin-bottom:6px}
+
+/* footer */
+footer{margin:34px 0 0;padding:26px 0 40px;border-top:1px solid var(--line);color:var(--muted);font-size:12.8px}
+footer h2{font-size:13px;color:var(--ink);margin:0 0 8px}
+footer ul{margin:0 0 16px;padding-left:18px}
+footer li{margin:3px 0}
+.disclaimer{background:#fffaf0;border:1px solid #f0e2c8;border-radius:12px;padding:12px 15px;color:#6b5a36;margin-bottom:16px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:560px){
+  html,body{overflow-x:hidden}
+  .grid{grid-template-columns:1fr}
+  header{padding:26px 0 20px}
+  .stats{grid-template-columns:repeat(2,1fr);margin-top:-12px}
+  .rule-grid{grid-template-columns:1fr}
+  .toolbar{gap:10px}
+  .search{flex:1 1 100%;min-width:0}
+  .chips{gap:6px}
+  .chip{padding:6px 11px;min-height:44px}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="eyebrow">BUCM · Second Classroom</div>
+    <h1>北中医第二课堂 · 活动学分汇总</h1>
+    <p>汇总校团委、学院与公众号发布的第二课堂学分活动，标注来源与核验等级。信息仅供参考，学分认定以学校系统为准。</p>
+    <div class="meta-row">
+      <span>📅 数据更新：<b id="updated">—</b></span>
+      <span>🔁 每 3 天自动抓取</span>
+      <span>🩺 每 2 小时健康检查</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="stats" aria-label="数据概览">
+    <div class="stat"><b id="s-total">0</b><span>收录条目</span></div>
+    <div class="stat"><b id="s-active">0</b><span>进行中</span></div>
+    <div class="stat"><b id="s-official">0</b><span>官方来源</span></div>
+    <div class="stat"><b id="s-a">0</b><span>A 级核验</span></div>
+  </section>
+
+  <section class="rules">
+    <h2>📌 学分速查 <small>据公开资料整理，最终以学生手册与第二课堂系统为准</small></h2>
+    <div class="rule-grid">
+      <div class="rule"><b>毕业最低总学分</b><span>（学制年数 − 1）× 2</span></div>
+      <div class="rule"><b>讲座 / 活动</b><span>0.1 分 / 次，综合素质类累计上限 0.5 分</span></div>
+      <div class="rule"><b>志愿服务</b><span>20 小时 = 1 分</span></div>
+      <div class="rule"><b>社会实践</b><span>暑期社会实践 2 分</span></div>
+    </div>
+    <p class="rules-src">来源：
+      <a href="http://mp.weixin.qq.com/s?__biz=Mzg4MTU4NjcxOA==&mid=2247512021&idx=1&sn=9eea7eddfad92e794f661d18aba1ba03" target="_blank" rel="noopener noreferrer">一文读懂本科生第二课堂·综合素质及选修</a>
+      ·
+      <a href="http://mp.weixin.qq.com/s?__biz=Mzg4MTU4NjcxOA==&mid=2247508945&idx=2&sn=6e49f73273c8625f64583daea69dacb6" target="_blank" rel="noopener noreferrer">一文读懂本科生第二课堂·志愿服务</a>
+    </p>
+  </section>
+
+  <div class="toolbar">
+    <label class="search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="搜索活动标题、公众号、证据原句…" autocomplete="off">
+      <span class="sr">搜索</span>
+    </label>
+    <div class="chips" id="status-chips" role="group" aria-label="状态筛选">
+      <button class="chip" data-status="all" aria-pressed="true">全部</button>
+      <button class="chip" data-status="active" aria-pressed="false">进行中</button>
+      <button class="chip" data-status="unknown" aria-pressed="false">待确认</button>
+      <button class="chip" data-status="ended" aria-pressed="false">已结束</button>
+    </div>
+    <div class="chips" id="level-chips" role="group" aria-label="核验等级筛选">
+      <button class="chip" data-level="all" aria-pressed="true">全部等级</button>
+      <button class="chip" data-level="A" aria-pressed="false">A 官方明确</button>
+      <button class="chip" data-level="B" aria-pressed="false">B 官方提及</button>
+      <button class="chip" data-level="C" aria-pressed="false">C 待核实</button>
+    </div>
+    <div class="chips" id="source-chips" role="group" aria-label="来源筛选">
+      <button class="chip" data-source="all" aria-pressed="true">全部来源</button>
+      <button class="chip" data-source="official" aria-pressed="false">官方</button>
+      <button class="chip" data-source="wechat" aria-pressed="false">公众号</button>
+      <button class="chip" data-source="manual" aria-pressed="false">人工</button>
+    </div>
+  </div>
+
+  <p class="count" id="count" aria-live="polite">—</p>
+  <section class="grid" id="grid"></section>
+  <div class="empty" id="empty" hidden><b>没有匹配的条目</b>换个关键词或筛选条件试试。</div>
+
+  <footer>
+    <div class="disclaimer">
+      ⚠️ 免责声明：本页为个人整理的信息汇总，非学校官方发布。活动可能变更、延期或取消，报名与学分认定请以主办方最新通知及《本科生实践活动学分手册》、第二课堂线上系统审核结果为准。
+    </div>
+    <h2>核验等级说明</h2>
+    <ul>
+      <li><b>A 级</b>：官方来源，原文明确写出第二课堂学分数。</li>
+      <li><b>B 级</b>：官方来源或公众号原文提到第二课堂/学分，但未给出明确数值。</li>
+      <li><b>C 级</b>：仅标题或摘要命中关键词，尚未核验，仅作线索。</li>
+    </ul>
+    <h2>数据来源</h2>
+    <ul id="sources"></ul>
+    <p>生成时间：<span id="gen">—</span> · 抓取异常会自动保留上一份可用数据并邮件告警。</p>
+  </footer>
+</main>
+
+<script>
+window.__DEKT_DATA__ = {"generated_at": "2026-11-08 23:00", "cutoff_date": "2025-09-01", "count": 19, "items": [{"title": "修古籍残叶悟岐黄匠心——北京中医药大学学子参加古籍修复沉浸式体验活动", "account": "校团委·新闻动态", "publish_date": "2026-11-05", "url": "https://tuanwei.bucm.edu.cn/qnzx/xwllk/592c723d538f401888148107d2c1815e.htm", "summary": "修古籍残叶 悟岐黄匠心——北京中医药大学学子参加古籍修复沉浸式体验活动 2026 年 11 月 4 日，北京中医药大学学子走进京华印书局，参与 2026 年 “京彩文化 青春绽放” 行动计划古籍修复技艺沉浸式体验课程。本次活动以非遗技艺为美育载体，让同学们浸润于书香纸韵之间，近距离体悟中华优秀传统文化独有的审美意蕴，以青春实践践行非遗保护、传播传统之美。 活", "credit": null, "credit_type": "综合素质", "deadline": null, "status": "unknown", "source_level": "C", "source_type": "official", "evidence": "", "verified_at": "2026-11-08", "id": "e725c54e57e1"}, {"title": "校团委顺利举办 “七秩岐黄·校史寻踪”建校七十周年专题定向越野活动", "account": "校团委·新闻动态", "publish_date": "2026-11-04", "url": "https://tuanwei.bucm.edu.cn/qnzx/xwllk/7eded42847a24057b555bedca8161e5c.htm", "summary": "2026年11月1日，由共青团北京中医药大学委员会文化体育部主办的2026年“七秩岐黄·校史寻踪”建校七十周年专题定向越野活动于良乡校区如期开展。广大学子走出宿舍、教室，奔赴户外，在奔跑探索中感悟校史荣光，体验体育运动与中医药文化交融碰撞的独特魅力。 活动现场，29支参赛队伍于学生活动中心集", "credit": null, "credit_type": "综合素质", "deadline": null, "status": "unknown", "source_level": "C", "source_type": "official", "evidence": "", "verified_at": "2026-11-08", "id": "e7231595d9fc"}, {"title": "舞颂华诞，逐梦杏林——我校顺利举办第四届“学院杯”健康操大赛", "account": "校团委·新闻动态", "publish_date": "2026-10-26", "url": "https://tuanwei.bucm.edu.cn/qnzx/xwllk/5265161fe4684f9eb99949d7ec90b49d.htm", "summary": "舞颂华诞，逐梦杏林。为献礼建校七十周年 ，展现北中医学子朝气蓬勃、奋发向上的良好风貌，由校团委主办、校学生会承办的第四届“学院杯”健康操比赛于 2026 年 10 月 25 日在北京中医药大学良乡校区图书馆报告厅顺利举办。 校党委常委、副校长张新生、校团委书记艾华、中药学院党委副书记任智宇、中药学", "credit": null, "credit_type": "学术科技", "deadline": null, "status": "unknown", "source_level": "C", "source_type": "official", "evidence": "", "verified_at": "2026-11-08", "id": "6e04f1be01cf"}, {"title": "校团委举办“七秩岐黄传薪火，鼎新致远济苍生”北京中医药大学建校70周年志愿者系列培训活动", "account": "校团委·新闻动态", "publish_date": "2026-10-12", "url": "https://tuanwei.bucm.edu.cn/qnzx/xwllk/445aba082279453aa5d17e005c598e77.htm", "summary": "为深入贯彻立德树人根本任务，进一步提升校庆志愿者专业化服务水平，规范服务礼仪、彰显青年风貌，高标准保障建校70周年校庆系列活动，10月11日，校团委于良乡校区西院综合楼一层报告厅举办“七秩岐黄传薪火，鼎新致远济苍生”北京中医药大学70周年校庆志愿者系列培训活动。本次培训", "credit": null, "credit_type": "志愿服务", "deadline": null, "status": "unknown", "source_level": "C", "source_type": "official", "evidence": "", "verified_at": "2026-11-08", "id": "2289ff1161ea"}, {"title": "我校耳穴协会开展系列中医药科普志愿服务活动获北京日报报道", "account": "校团委·新闻动态", "publish_date": "2026-09-29", "url": "https://tuanwei.bucm.edu.cn/qnzx/xwllk/ddc170d9e92042cba9c63c4271dc6c53.htm", "summary": "2026年9月，北京中医药大学耳穴协会走进樱花园社区，连续开展两场主题鲜明、形式丰富的中医药科普志愿服务活动，以专业科普、实操体验、互动教学的形式，为社区居民送上优质中医药健康服务。相关特色志愿服务活动获《北京日报》官方宣传报道，展现了我校学子深耕基层、服务民生、传承岐黄的良好风貌。 9月16日上午，", "credit": null, "credit_type": "志愿服务", "deadline": null, "status": "unknown", "source_level": "C", "source_type": "official", "evidence": "", "verified_at": "2026-11-08", "id": "67dc3cfe58c0"}, {"title": "2026年北京中医药大学专题一、专题二暑期社会实践结题答辩会议顺利召开", "account": "校团委·新闻动态", "publish_date": "2026-09-21", "url": "https://tuanwei.bucm.edu.cn/qnzx/xwllk/dce909b9b4cf45639f8b2b1baa7d7e13.htm", "summary": "2026年9月18日下午，北京中医药大学校团委在良乡校区西院组织召开2026年专题一、专题二暑期社会实践结题答辩会，系统总结本年度暑期社会实践工作。为提升评审的专业性与代表性，校团委特邀北京市志愿服务指导中心、房山区政协、北京理工大学、北京工商大学、北京建筑大学、中国社会科学院大学等单位", "credit": null, "credit_type": "志愿服务", "deadline": null, "status": "unknown", "source_level": "C", "source_type": "official", "evidence": "", "verified_at": "2026-11-08", "id": "e301fccdd4b3"}, {"title": "校团委举办“七秩岐黄传薪火，鼎新致远济苍生”北京中医药大学70周年校庆志愿者系列培训活动", "account": "校团委·新闻动态", "publish_date": "2026-09-08", "url": "https://tuanwei.bucm.edu.cn/qnzx/xwllk/3c412835a24d4d21ad21105e83c59ce4.htm", "summary": "为深入学习贯彻新时代青年使命担当，厚植北中医青年爱校荣校情怀，凝聚青年学子奋进力量，以昂扬风貌、过硬素质、优良作风迎接我校建校70周年校庆系列工作，9月7日，校团委于良乡校区学生活动中心四层举办“七秩岐黄传薪火，鼎新致远济苍生”北京中医药大学70周年校庆志愿者系列培训活", "credit": null, "credit_type": "志愿服务", "deadline": null, "status": "unknown", "source_level": "C", "source_type": "official", "evidence": "", "verified_at": "2026-11-08", "id": "7e79a26ba3e5"}, {"title": "岐黄越草原，薪火映通辽——北中医暑期社会实践团通辽行纪实", "account": "校团委·新闻动态", "publish_date": "2026-07-28", "url": "https://tuanwei.bucm.edu.cn/qnzx/xwllk/9d40466eb5f24ff29370db447c027f31.htm", "summary": "7月25日，依托全国文化科技卫生“三下乡”集中示范活动契机，北京中医药大学师生实践团奔赴内蒙古通辽市，开展了为期五天的暑期社会实践与文化交流活动。本次实践紧扣铸牢中华民族共同体意识主线，锚定乡村振兴战略部署，以“师生送健康”为核心主题，通过产业调研、蒙医临床研学、社区义诊惠民、中医药文化科普、特色成果", "credit": null, "credit_type": "志愿服务", "deadline": null, "status": "unknown", "source_level": "C", "source_type": "official", "evidence": "", "verified_at": "2026-11-08", "id": "f8a4219c6f34"}, {"title": "关于邀请全校师生赴内蒙古开展“京蒙协作 30 年”主题社会实践的函", "account": "校团委·通知公告", "publish_date": "2026-07-10", "url": "https://tuanwei.bucm.edu.cn/qnzx/xlgg/b7ec0f33f0aa43a9b91b272bff27374b.htm", "summary": "各学院、临床医学院、各职能部门： 为深入贯彻落实习近平总书记对常态化做好东西部协作工作作出的重要指示和全国东西部协作工作会议精神，引导首都高校青年学子走出校园，实地感受京蒙协作 30 年丰硕成果， 以专业所长服务京蒙协作，北京市第八批东西部协作内蒙古挂职干部团队邀请北京高校师生赴内蒙古开展“", "credit": null, "credit_type": "志愿服务", "deadline": null, "status": "unknown", "source_level": "C", "source_type": "official", "evidence": "", "verified_at": "2026-11-08", "id": "f45b99cecbbc"}, {"title": "数智赋能岐黄实践·北中医举办新时代中医药数智育人共同体社会实践出征仪式暨行前培训会", "account": "校团委·新闻动态", "publish_date": "2026-07-09", "url": "https://tuanwei.bucm.edu.cn/qnzx/xwllk/7c6b9eaeb16a40ac915e01141461bcd9.htm", "summary": "2026年7月8日，新时代中医药数智育人共同体社会实践出征仪式暨行前培训会于北京中医药大学良乡校区举办。共青团中央青年发展部部长岳伟，北京中医药大学党委书记王瑶琪出席活动，校党委副书记李彧主持会议。学校职能部门、各学院相关负责人、实践项目专家、指导教师及350余名实践团队负责", "credit": null, "credit_type": "志愿服务", "deadline": null, "status": "unknown", "source_level": "C", "source_type": "official", "evidence": "", "verified_at": "2026-11-08", "id": "a0cb9f960f0a"}, {"title": "校团委举办“巧手雕琢千年非遗风华，初心奔赴万里前程山海”毕业季非遗体验活动", "account": "校团委·新闻动态", "publish_date": "2026-06-22", "url": "https://tuanwei.bucm.edu.cn/qnzx/xwllk/8d9fcd1834254729a1eb340cbdf1c9e7.htm", "summary": "为厚植青年传统文化底蕴，以非遗文化赋能毕业育人，让学子带走校园温情、传承中华文脉。6月18日上午，校团委于良乡校区东院食堂对面，开展“巧手雕琢千年非遗风华，初心奔赴万里前程山海”毕业季非遗体验活动。本次活动汇聚特色非遗手工项目，吸引全校300余人次毕业生到场沉浸式体验、打卡留念，在指", "credit": null, "credit_type": "综合素质", "deadline": null, "status": "unknown", "source_level": "C", "source_type": "official", "evidence": "", "verified_at": "2026-11-08", "id": "6ec79e1ba979"}, {"title": "校团委举办2026年“七秩薪火杏林逐梦”毕业季活动", "account": "校团委·新闻动态", "publish_date": "2026-06-18", "url": "https://tuanwei.bucm.edu.cn/qnzx/xwllk/609e07a264fa47f39a998e73de26133c.htm", "summary": "校团委举办2026年“七秩薪火 杏林逐梦”毕业季活动 2026年6月18日，由校团委主办、校学生会承办的2026年“七秩薪火 杏林逐梦”毕业季活动，在良乡校区东院开展。本次活动旨在通过毕业季互动与创作，陪伴毕业生珍藏杏林记忆，感悟北中医七秩薪火与医者初心，厚植爱校情怀；引导大家立足专业坚守使命，怀揣母校祝福自信踏上新程，让岐黄精神代代相传。 活动现场设主题打", "credit": null, "credit_type": "综合素质", "deadline": null, "status": "unknown", "source_level": "C", "source_type": "official", "evidence": "", "verified_at": "2026-11-08", "id": "7b65bd8c242e"}, {"title": "春意盎然|BISU三月第二课堂校园文化活动图鉴", "account": "BISU青年", "publish_date": "2026-03-29", "url": "https://weixin.sogou.com/weixin?type=2\u0026query=%E6%98%A5%E6%84%8F%E7%9B%8E%E7%84%B6%7CBISU%E4%B8%89%E6%9C%88%E7%AC%AC%E4%BA%8C%E8%AF%BE%E5%A0%82%E6%A0%A1%E5%9B%AD%E6%96%87%E5%8C%96%E6%B4%BB%E5%8A%A8%E5%9B%BE%E9%89%B4", "summary": "BISU三月 第二课堂 校园文化 活动 图鉴踏春而行,遇见二外最... 翔宇班联合 北京中医药大学 开展“健康同行,志愿暖心”公益志愿...", "credit": null, "credit_type": "志愿服务", "deadline": null, "status": "unknown", "source_level": "C", "source_type": "wechat", "evidence": "", "verified_at": "2026-11-08", "link_note": "在搜狗微信中检索原文", "id": "5e7ccc40fdd9"}, {"title": "朋辈引领|揭榜挂帅,寻找科研路上同行的你!", "account": "岐黄青年汇", "publish_date": "2026-03-26", "url": "https://weixin.sogou.com/weixin?type=2\u0026query=%E6%9C%8B%E8%BE%88%E5%BC%95%E9%A2%86%7C%E6%8F%AD%E6%A6%9C%E6%8C%82%E5%B8%85%2C%E5%AF%BB%E6%89%BE%E7%A7%91%E7%A0%94%E8%B7%AF%E4%B8%8A%E5%90%8C%E8%A1%8C%E7%9A%84%E4%BD%A0%21", "summary": "岐黄 问道,薪火相传科研之路,上下求索以研促学,以行践知格物... 联合 第二课堂 理论研究室,依托东方医院“医-教-研”协同发展的...", "credit": null, "credit_type": "综合素质", "deadline": null, "status": "unknown", "source_level": "B", "source_type": "wechat", "evidence": "", "verified_at": "2026-11-08", "link_note": "在搜狗微信中检索原文", "id": "ba5a5943c518"}, {"title": "【院会之声丨我为家乡代言】 中医药文化,绘就乡村振兴新图景—— 北中医中医学院邀你共赴乡野之约", "account": "BUCM中医学院团学小微", "publish_date": "2026-03-14", "url": "https://weixin.sogou.com/weixin?type=2\u0026query=%E3%80%90%E9%99%A2%E4%BC%9A%E4%B9%8B%E5%A3%B0%E4%B8%A8%E6%88%91%E4%B8%BA%E5%AE%B6%E4%B9%A1%E4%BB%A3%E8%A8%80%E3%80%91%20%E4%B8%AD%E5%8C%BB%E8%8D%AF%E6%96%87%E5%8C%96%2C%E7%BB%98%E5%B0%B1%E4%B9%A1%E6%9D%91%E6%8C%AF%E5%85%B4%E6%96%B0%E5%9B%BE%E6%99%AF%E2%80%94%E2%80%94%20%E5%8C%97%E4%B8%AD%E5%8C%BB%E4%B8%AD%E5%8C%BB%E5%AD%A6%E9%99%A2%E9%82%80%E4%BD%A0%E5%85%B1%E8%B5%B4%E4%B9%A1%E9%87%8E%E4%B9%8B%E7%BA%A6", "summary": "山东云端畅联网络科技有限公司3 活动 对象 北京中医药大学 全体在校学生 4 活动 福利荣誉证书、媒体报道、劳动时长和 第二课堂 学分5报...", "credit": null, "credit_type": "综合素质", "deadline": null, "status": "unknown", "source_level": "B", "source_type": "wechat", "evidence": "", "verified_at": "2026-11-08", "link_note": "在搜狗微信中检索原文", "id": "cfc45cc9683a"}, {"title": "中国针灸学会“云经典”读书会22期预告佘延芬:传承针灸原创理论、创新穴位诊疗思维——基于“一源三歧”理论经穴反应原发性痛经的研究", "account": "鍼灸明堂", "publish_date": "2025-12-20", "url": "https://weixin.sogou.com/weixin?type=2\u0026query=%E4%B8%AD%E5%9B%BD%E9%92%88%E7%81%B8%E5%AD%A6%E4%BC%9A%E2%80%9C%E4%BA%91%E7%BB%8F%E5%85%B8%E2%80%9D%E8%AF%BB%E4%B9%A6%E4%BC%9A22%E6%9C%9F%E9%A2%84%E5%91%8A%E4%BD%98%E5%BB%B6%E8%8A%AC%3A%E4%BC%A0%E6%89%BF%E9%92%88%E7%81%B8%E5%8E%9F%E5%88%9B%E7%90%86%E8%AE%BA%E3%80%81%E5%88%9B%E6%96%B0%E7%A9%B4%E4%BD%8D%E8%AF%8A%E7%96%97%E6%80%9D%E7%BB%B4%E2%80%94%E2%80%94%E5%9F%BA%E4%BA%8E%E2%80%9C%E4%B8%80%E6%BA%90%E4%B8%89%E6%AD%A7%E2%80%9D%E7%90%86%E8%AE%BA%E7%BB%8F%E7%A9%B4%E5%8F%8D%E5%BA%94%E5%8E%9F%E5%8F%91%E6%80%A7%E7%97%9B%E7%BB%8F%E7%9A%84%E7%A0%94%E7%A9%B6", "summary": "本次读书会可认证 北京中医药大学 学生 第二课堂 学分 (仅 北中医 在读学生可认证,报名后搜索:中国针灸学会云经典读书会)3 海报4 ...", "credit": null, "credit_type": "综合素质", "deadline": null, "status": "unknown", "source_level": "C", "source_type": "wechat", "evidence": "", "verified_at": "2026-11-08", "link_note": "在搜狗微信中检索原文", "id": "948ab0dce9c1"}, {"title": "「杏林拾遗录」主题学术展，正式开展！", "account": "微信公众号（待确认）", "publish_date": null, "url": "http://mp.weixin.qq.com/s?__biz=MzU1MTc2NDcwOQ==\u0026mid=2247532086\u0026idx=1\u0026sn=8a8aff783807ccbbce254d67e27c081c", "summary": "面向全校学生征集学科冷知识投稿，入选作品可获第二课堂学分并制成宣传海报。", "credit": "0.1", "credit_type": "综合素质", "deadline": "2026-04-25", "source_level": "B", "source_type": "manual", "evidence": "投稿成功者可获得第二课堂0.1学分", "status": "ended", "id": "1ec624062d3c"}, {"title": "决赛观众招募｜可以只为了学分来，但来了你可能真会被震到", "account": "微信公众号（待确认）", "publish_date": null, "url": "http://mp.weixin.qq.com/s?__biz=Mzg5NTY2NzQ3Nw==\u0026mid=2247485550\u0026idx=1\u0026sn=948c26c546b86ecb1712ade1617071df", "summary": "决赛现场观众招募，参与可获第二课堂学分。", "credit": "0.1", "credit_type": "综合素质", "deadline": null, "source_level": "B", "source_type": "manual", "evidence": "标题及摘要标注可获得第二课堂0.1学分（需以原文为准）", "status": "unknown", "id": "d7cda18a4e83"}, {"title": "清风茶社\u0026蝉衣汉服社“茶香霓裳·杏林春宴”活动通知", "account": "bucm社联（待确认）", "publish_date": null, "url": "http://mp.weixin.qq.com/s?__biz=MzAxOTM2OTk3Nw==\u0026mid=2650796450\u0026idx=1\u0026sn=c4b35e3d0e14fedc958e6cdebae3f421", "summary": "茶社与汉服社联合活动，完整参与可认证第二课堂综合素质学分。", "credit": "0.1", "credit_type": "综合素质", "deadline": null, "source_level": "B", "source_type": "manual", "evidence": "完整参与可认证第二课堂综合素质0.1学分", "status": "unknown", "id": "3ac7199a8372"}], "sources": ["校团委·通知公告", "校团委·新闻动态", "微信公众号（搜狗微信检索，仅作线索）", "人工核验补充（公众号原文）"]};
+</script>
+<script>
+(function () {
+  const DATA = window.__DEKT_DATA__ || { items: [], generated_at: "", sources: [] };
+  const items = DATA.items || [];
+  const state = { q: "", status: "all", level: "all", source: "all" };
+  const $ = (id) => document.getElementById(id);
+
+  const STATUS_TEXT = { active: "进行中", ended: "已结束", unknown: "待确认" };
+  const LEVEL_TEXT = { A: "A 官方明确", B: "B 官方提及", C: "C 待核实" };
+  const TYPE_ORDER = ["讲座活动", "志愿服务", "社会实践", "学术科技", "社团活动", "综合素质", "未分类"];
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[c]));
+  }
+
+  function todayStr() {
+    const d = new Date();
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  }
+
+  function fmtDate(s) {
+    s = String(s == null ? "" : s);
+    const m = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+    return m ? m[1] + "-" + m[2] + "-" + m[3] : (s || "日期未知");
+  }
+
+  // 页面静态部署后仍会过截止日期，前端每次加载重算状态
+  function statusOf(it) {
+    const dl = fmtDate(it.deadline);
+    if (/^\d{4}-\d{2}-\d{2}$/.test(dl)) {
+      return dl < todayStr() ? "ended" : "active";
+    }
+    return it.status || "unknown";
+  }
+
+  function safeHref(u) {
+    try {
+      const x = new URL(u, location.href);
+      return (x.protocol === "http:" || x.protocol === "https:") ? u : "#";
+    } catch (e) {
+      return "#";
+    }
+  }
+
+  function matches(it) {
+    if (state.status !== "all" && statusOf(it) !== state.status) return false;
+    if (state.level !== "all" && it.source_level !== state.level) return false;
+    if (state.source !== "all" && it.source_type !== state.source) return false;
+    if (state.q) {
+      const q = state.q.toLowerCase();
+      const blob = [it.title, it.account, it.summary, it.evidence, it.credit_type].join(" ").toLowerCase();
+      if (!blob.includes(q)) return false;
+    }
+    return true;
+  }
+
+  function card(it) {
+    const credit = it.credit
+      ? '<span class="credit"><b>' + esc(it.credit) + '</b> 学分 · ' + esc(it.credit_type || "未分类") + '</span>'
+      : '<span class="credit none">未注明学分数 · ' + esc(it.credit_type || "未分类") + '</span>';
+    const deadline = it.deadline
+      ? '<span class="deadline">截止 <strong>' + esc(fmtDate(it.deadline)) + '</strong></span>'
+      : '';
+    const evidence = it.evidence ? '<p class="evidence">“' + esc(it.evidence) + '”</p>' : '';
+    const summary = it.summary ? '<p class="summary">' + esc(it.summary) + '</p>' : '';
+    const linkText = it.source_type === "wechat" ? "在搜狗微信中查看" : "查看原文";
+    const st = statusOf(it);
+    const href = safeHref(it.url);
+    return '<article class="card" data-level="' + esc(it.source_level) + '" data-status="' + esc(st) + '">'
+      + '<div class="card-top">'
+      + '<span class="badge ' + esc(st) + '">' + esc(STATUS_TEXT[st] || st) + '</span>'
+      + '<span class="badge lv ' + esc(it.source_level) + '">' + esc(LEVEL_TEXT[it.source_level] || it.source_level) + '</span>'
+      + '</div>'
+      + '<h3><a href="' + esc(href) + '" target="_blank" rel="noopener noreferrer">' + esc(it.title) + '</a></h3>'
+      + '<div class="card-meta"><span>' + esc(it.account) + '</span><span>' + esc(fmtDate(it.publish_date)) + '</span></div>'
+      + summary
+      + evidence
+      + '<div class="credit-row">' + credit + deadline + '</div>'
+      + '<a class="open-link" href="' + esc(href) + '" target="_blank" rel="noopener noreferrer">' + linkText + '</a>'
+      + '</article>';
+  }
+
+  function render() {
+    const list = items.filter(matches);
+    $("grid").innerHTML = list.map(card).join("");
+    $("empty").hidden = list.length > 0;
+    $("count").textContent = "共 " + list.length + " 条" + (list.length !== items.length ? "（已筛选，总计 " + items.length + " 条）" : "");
+    $("s-total").textContent = items.length;
+    $("s-active").textContent = items.filter((i) => statusOf(i) === "active").length;
+    $("s-official").textContent = items.filter((i) => i.source_type === "official").length;
+    $("s-a").textContent = items.filter((i) => i.source_level === "A").length;
+  }
+
+  document.querySelectorAll("#status-chips .chip").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      state.status = btn.dataset.status;
+      document.querySelectorAll("#status-chips .chip").forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+      render();
+    });
+  });
+  document.querySelectorAll("#level-chips .chip").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      state.level = btn.dataset.level;
+      document.querySelectorAll("#level-chips .chip").forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+      render();
+    });
+  });
+  document.querySelectorAll("#source-chips .chip").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      state.source = btn.dataset.source;
+      document.querySelectorAll("#source-chips .chip").forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+      render();
+    });
+  });
+  $("q").addEventListener("input", (e) => { state.q = e.target.value.trim(); render(); });
+
+  $("updated").textContent = DATA.generated_at ? fmtDate(DATA.generated_at) : "尚未生成";
+  $("gen").textContent = DATA.generated_at || "—";
+  const sources = DATA.sources || [];
+  $("sources").innerHTML = sources.length
+    ? sources.map((s) => "<li>" + esc(s) + "</li>").join("")
+    : "<li>校团委官网、微信公众号（搜狗微信检索）</li>";
+
+  render();
+})();
+</script>
+</body>
+</html>
