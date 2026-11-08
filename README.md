@@ -2,6 +2,17 @@
 
 聚合北京中医药大学第二课堂学分活动的信息页。网页为纯静态单文件，数据每 3 天自动抓取，另有健康检查与邮件告警。
 
+**线上地址**：https://pourvillefox-blip.github.io/bucm-dekt/
+**仓库**：https://github.com/pourvillefox-blip/bucm-dekt （public）
+
+## 当前状态（2026-11-08）
+
+- 官网抓取：6 个栏目可用，最近一次入库 27 条。
+- 公众号抓取：搜狗微信索引陈旧，只作为低精度线索，最近一次 4 条。
+- 人工补充：3 条已核验的公众号活动。
+- 定时任务：本机每 3 天抓取并自动 push；每 2 小时健康检查。
+- 邮件告警：**尚未配置 SMTP 授权码，当前不会真正发信**。
+
 ## 目录结构
 
 ```
@@ -56,6 +67,8 @@ python scripts\healthcheck.py
 
 QQ 邮箱授权码在「设置 → 账户 → POP3/IMAP/SMTP 服务」里生成。163 邮箱同理（`smtp.163.com`）。
 
+> 当前 `password` 为空，邮件告警尚不可用；填好授权码后可用 `python scripts\healthcheck.py` 验证（健康时不会发信，可临时把 `stale_days` 改成 0 触发一次测试）。
+
 ## 部署到 GitHub Pages
 
 ```bat
@@ -68,7 +81,7 @@ gh repo create bucm-dekt --public --source=. --remote=origin --push
 
 然后到 GitHub 仓库 → Settings → Pages → Source 选 `Deploy from a branch`，分支 `main`，目录 `/docs`。
 
-以后每次更新网页后推送：
+`config.json` 里 `deploy.enabled` 已设为 `true`，`run_update.py` 生成网页后会自动提交并推送，无需手动执行。手动推送仍可用：
 
 ```bat
 python scripts\deploy.py
@@ -91,7 +104,9 @@ scripts\setup_tasks.bat
 | `BUCM-DEKT-Update` | 每 3 天 03:00 | 抓取 + 生成网页 |
 | `BUCM-DEKT-Health` | 每 2 小时 | 检查页面/数据，异常发邮件 |
 
-> ⚠️ 任务只在电脑开机且未休眠时执行。要 7×24 更新，需要把项目放到云服务器或改用 GitHub Actions。
+> ⚠️ 任务只在电脑开机、已登录且未休眠时执行；关机期间不会更新，也不会告警。要 7×24 更新，需要云服务器、GitHub Actions 或外部探针。
+>
+> 任务已设置为“允许电池供电、错过时间后补跑”，但仍是交互式登录模式。
 
 ## 手动补充公众号活动
 

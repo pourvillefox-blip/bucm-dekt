@@ -1,4 +1,5 @@
 config.json
+ISSUES.local.md
 logs/
 *.bak
 data/*.bak
