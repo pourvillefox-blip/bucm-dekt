@@ -8,6 +8,7 @@ from datetime import date
 
 from common import (
     DATA_DIR,
+    clean_summary,
     clean_title,
     compute_status,
     decode_html,
@@ -62,18 +63,23 @@ def extract_article_text(html: str) -> str:
 
 
 def is_relevant(title: str, text: str) -> bool:
-    """保留与第二课堂/可参与活动相关的条目，过滤纯公示和评奖结果。"""
-    if any(x in title for x in ("公示", "名单", "评选", "推荐", "喜报")):
+    """保留与第二课堂/可报名活动相关的条目，过滤公示、评奖和活动回顾。"""
+    if any(x in title for x in ("公示", "名单", "评选", "推荐", "喜报",
+                                "顺利", "圆满", "落幕", "收官", "纪实",
+                                "回顾", "总结", "侧记")):
         return False
     blob = title + "\n" + text
     if "第二课堂" in blob or "学分" in blob:
         return True
-    activity_words = ("讲座", "报告会", "沙龙", "论坛", "竞赛", "大赛",
-                      "培训", "招募", "报名", "社会实践", "志愿服务", "活动")
+    if "报名" in blob or "招募" in blob:
+        return True
+    activity_words = ("讲座", "报告会", "沙龙", "论坛", "宣讲",
+                      "培训", "竞赛", "大赛", "活动预告")
     return any(word in title for word in activity_words)
 
 
 def build_item(title: str, pub: str, url: str, text: str, source_name: str) -> dict:
+    body = text[len(title):] if text.startswith(title) else text
     credit, evidence = extract_credit(text)
     deadline = extract_deadline(text, pub)
     level = "C"
@@ -86,7 +92,7 @@ def build_item(title: str, pub: str, url: str, text: str, source_name: str) -> d
         "account": source_name,
         "publish_date": pub,
         "url": safe_url(url),
-        "summary": re.sub(r"\s+", " ", text)[:180],
+        "summary": clean_summary(body),
         "credit": credit,
         "credit_type": extract_credit_type(text + title),
         "deadline": deadline,
@@ -94,6 +100,8 @@ def build_item(title: str, pub: str, url: str, text: str, source_name: str) -> d
         "source_level": level,
         "source_type": "official",
         "evidence": evidence or "",
+        "link_ok": True,
+        "checked_at": date.today().isoformat(),
         "verified_at": date.today().isoformat(),
     }
 
@@ -123,7 +131,7 @@ def crawl() -> list[dict]:
                     pub_date = date.fromisoformat(pub)
                 except ValueError:
                     continue
-                if pub_date < cutoff:
+                if pub_date < cutoff or pub_date > date.today():
                     continue
                 full_url = urllib.parse.urljoin(url, href)
                 if not full_url.lower().startswith(("http://", "https://")):

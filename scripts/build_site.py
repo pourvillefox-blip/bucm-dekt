@@ -12,6 +12,7 @@ from common import (
     ROOT,
     SITE_DIR,
     atomic_write_text,
+    clean_summary,
     clean_title,
     compute_status,
     load_config,
@@ -36,6 +37,9 @@ def normalize(item: dict, today: date) -> dict | None:
     if not title or not url:
         log.warning("跳过无标题或链接不合法的条目：%r", item.get("title"))
         return None
+    if item.get("link_ok") is False:
+        log.warning("跳过失效链接：%r", title)
+        return None
 
     status = compute_status(item.get("deadline"), item.get("publish_date"), today)
     # 没有截止日期的新闻/通知，不轻易标成“进行中”
@@ -43,9 +47,10 @@ def normalize(item: dict, today: date) -> dict | None:
         if not any(k in title for k in ("报名", "招募", "预告", "通知")):
             status = "unknown"
 
-    summary = str(item.get("summary") or "").strip()
+    summary = str(item.get("summary") or "")
     if summary.startswith(title):
         summary = summary[len(title):].lstrip(" ：:，,。.;；")
+    summary = clean_summary(summary)
 
     item["title"] = title
     item["url"] = url

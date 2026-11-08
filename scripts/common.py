@@ -228,6 +228,27 @@ def extract_deadline(text: str, publish_date: str | None) -> str | None:
     return max(pool)
 
 
+def clean_summary(text: str, limit: int = 180) -> str:
+    """去掉 CMS 正文开头的 日期/访问量/作者 等元信息，截断到指定长度。"""
+    t = re.sub(r"\s+", " ", text or "").strip()
+    t = re.sub(r"<[^>]*>", " ", t)   # 转义后还原出来的完整标签
+    t = re.sub(r"<[^>]*$", " ", t)   # 未闭合的残缺标签
+    t = re.sub(r"\s+", " ", t).strip()
+    # 形如 “日期：2026-11-06 | 访问量： …” 的元信息段
+    t = re.sub(
+        r"(?:日期|访问量|浏览量|点击量|作者|来源|编辑|审核|字号|字体|"
+        r"发布时间|更新时间|阅读量)\s*[：:]\s*[^|]{0,60}?\s*\|\s*",
+        "", t)
+    t = re.sub(r"^(?:\|\s*)+", "", t)
+    # 残留的 “访问量：  ” 这类只有标签没有值的
+    t = re.sub(
+        r"^(?:日期|访问量|浏览量|点击量|作者|来源|编辑|审核|字号)\s*[：:]\s*"
+        r"(?:\d{4}[-/年.]\d{1,2}[-/月.]\d{1,2}日?|\d+)?\s*",
+        "", t)
+    t = t[:limit].strip()
+    return re.sub(r"<[^>]*$", "", t).strip()
+
+
 def clean_title(title: str) -> str:
     """去掉搜索高亮/换行带来的多余空格，尤其是汉字之间的空格。"""
     t = re.sub(r"\s+", " ", (title or "")).strip()

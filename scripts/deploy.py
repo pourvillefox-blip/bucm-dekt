@@ -7,7 +7,15 @@ from datetime import datetime
 
 from common import ROOT, load_config
 
-PATHS = ["docs", "data/combined.json", ".gitignore", "README.md"]
+PATHS = [
+    "docs",
+    "data/combined.json",
+    "data/manual.json",
+    "scripts",
+    "site/template.html",
+    ".gitignore",
+    "README.md",
+]
 
 
 def git(*args: str) -> subprocess.CompletedProcess:
