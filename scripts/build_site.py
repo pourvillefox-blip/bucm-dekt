@@ -88,8 +88,9 @@ def dedupe(items: list[dict]) -> list[dict]:
 
 
 def sort_key(item: dict):
+    # 配合 reverse=True：1（进行中）排在 0 前面，再按日期倒序
     return (
-        0 if item.get("status") == "active" else 1,
+        1 if item.get("status") == "active" else 0,
         item.get("publish_date") or "",
     )
 
