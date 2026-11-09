@@ -7,8 +7,8 @@
 
 ## 当前状态（2026-11-08）
 
-- 官网抓取：6 个栏目可用，最近一次入库 27 条。
-- 公众号抓取：搜狗微信索引陈旧，只作为低精度线索，最近一次 4 条。
+- 官网抓取：8 个栏目可用，最近一次入库 44 条。
+- 公众号：搜狗微信线索 4 条 + WeRSS 微信读书通道 3 条（含当天活动）。
 - 人工补充：3 条已核验的公众号活动。
 - 定时任务：本机每 3 天抓取并自动 push；每 2 小时健康检查。
 - 邮件告警：已配置并测试通过（发件 `3026664502@qq.com` → 收件 `pourvillefox@qq.com`）。
@@ -108,20 +108,27 @@ scripts\setup_tasks.bat
 >
 > 任务已设置为“允许电池供电、错过时间后补跑”，但仍是交互式登录模式。
 
-## 接入微信公众号 RSS（可选）
+## 微信公众号 RSS（已部署 WeRSS）
 
-如果后续部署了 Wechat2RSS 或 WeRSS，可在 `config.json` 里打开 RSS 通道：
+本机已部署 WeRSS：`C:\Users\Fox\we-mp-rss`，使用**微信读书通道**（`gather.model: weread_mp`）。
+
+- 启动：`C:\Users\Fox\we-mp-rss\start_WeRSS_background.bat`
+- 管理页：http://127.0.0.1:8001 （账号 `Fox`）
+- 已订阅四个号：北京中医药大学、岐黄青年汇、bucm社联、中医学院青协
+- 守护任务：`WeRSS-KeepAlive` 每 30 分钟检查一次，未运行则启动
+
+`config.json` 的 `wechat_rss` 已填好四个 feed 地址，并开启 `refresh`：每次 `crawl_rss.py` 会先让 WeRSS 更新四个号的最新文章，再读取 feed。
 
 ```json
 "wechat_rss": {
   "enabled": true,
-  "feeds": [
-    {"name": "岐黄青年汇", "url": "https://你的RSS服务/feed/xxxx"}
-  ]
+  "refresh": true,
+  "admin_url": "http://127.0.0.1:8001",
+  "feeds": [{"name": "岐黄青年汇", "url": "http://127.0.0.1:8001/feed/MP_WXS_xxx.xml"}]
 }
 ```
 
-然后运行 `python scripts\crawl_rss.py`。只接受标题/摘要里明确提到“第二课堂”且与北中医相关的条目，结果写入 `data/rss.json`，构建时自动合并。
+> 限制：微信读书通道每次通常只返回每个号的最新一篇，所以历史文章不会一次性补齐；但最新活动不会漏。公众号后台 `app` 模式能翻页，但新账号会长期返回 `200013 frequency control`，暂不可用。
 
 ## 手动补充公众号活动
 

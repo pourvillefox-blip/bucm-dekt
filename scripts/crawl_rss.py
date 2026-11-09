@@ -5,10 +5,14 @@
 """
 from __future__ import annotations
 
+import json
 import re
+import time
+import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import date, datetime
 from email.utils import parsedate_to_datetime
+from urllib.parse import urlencode
 
 from common import (
     DATA_DIR,
@@ -85,6 +89,48 @@ def parse_feed(raw: bytes) -> list[dict]:
     return entries
 
 
+def _werss_login(base: str, username: str, password: str) -> str:
+    data = urlencode({"username": username, "password": password}).encode("utf-8")
+    req = urllib.request.Request(
+        base + "/auth/login", data=data,
+        headers={"Content-Type": "application/x-www-form-urlencoded"})
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        payload = json.loads(resp.read().decode("utf-8"))
+    return payload["data"]["access_token"]
+
+
+def refresh_werss_feeds(feeds: list[dict], rss_cfg: dict) -> None:
+    """在读取 feed 前，先让 WeRSS 更新四个公众号的最新文章。"""
+    if not rss_cfg.get("refresh"):
+        return
+    base = str(rss_cfg.get("admin_url", "http://127.0.0.1:8001")).rstrip("/") + "/api/v1/wx"
+    try:
+        token = _werss_login(base, rss_cfg.get("username", ""), rss_cfg.get("password", ""))
+    except Exception as exc:  # noqa: BLE001
+        log.warning("WeRSS 登录失败，跳过刷新：%s", exc)
+        return
+
+    for feed in feeds:
+        m = re.search(r"/(MP_WXS_[^.]+)\.xml", feed.get("url", ""))
+        if not m:
+            continue
+        fid = m.group(1)
+        req = urllib.request.Request(
+            f"{base}/mps/update/{fid}?start_page=0&end_page=1",
+            headers={"Authorization": "Bearer " + token})
+        try:
+            with urllib.request.urlopen(req, timeout=240) as resp:
+                payload = json.loads(resp.read().decode("utf-8"))
+            data = payload.get("data") or {}
+            if payload.get("code") == 0:
+                log.info("刷新「%s」：%s 条", feed.get("name"), data.get("total", "?"))
+            else:
+                log.warning("刷新「%s」未成功：%s", feed.get("name"), payload.get("message"))
+        except Exception as exc:  # noqa: BLE001
+            log.warning("刷新「%s」失败：%s", feed.get("name"), exc)
+        time.sleep(5)
+
+
 def crawl() -> list[dict]:
     cfg = load_config()
     rss_cfg = cfg.get("wechat_rss", {})
@@ -92,6 +138,7 @@ def crawl() -> list[dict]:
         log.info("wechat_rss 未启用")
         return []
 
+    refresh_werss_feeds(rss_cfg.get("feeds", []), rss_cfg)
     cutoff = date.fromisoformat(cfg["cutoff_date"][:10])
     results: list[dict] = []
     seen: set[str] = set()
