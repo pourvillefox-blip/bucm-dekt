@@ -41,6 +41,19 @@ def page_url(base: str, page_index: int) -> str:
     return f"{base}/index{page_index}.htm"
 
 
+def _norm_date(value: str) -> str | None:
+    parts = re.split(r"[-/.]", value.strip())
+    if len(parts) != 3:
+        return None
+    try:
+        y, m, d = (int(p) for p in parts)
+    except ValueError:
+        return None
+    if not (2000 <= y <= 2100 and 1 <= m <= 12 and 1 <= d <= 31):
+        return None
+    return f"{y:04d}-{m:02d}-{d:02d}"
+
+
 def parse_list(html: str) -> list[tuple[str, str, str]]:
     items = []
     for block in re.findall(r"<li[^>]*>(.*?)</li>", html, re.S):
@@ -51,12 +64,32 @@ def parse_list(html: str) -> list[tuple[str, str, str]]:
             continue
         title = clean_title(re.sub(r"<[^>]+>", "", tm.group(1)))
         items.append((title, dm.group(1), hm.group(1)))
+    if items:
+        return items
+
+    # 第二种模板：<li><span>2026/10/16</span><a href="...">标题</a></li>
+    for block in re.findall(r"<li[^>]*>(.*?)</li>", html, re.S):
+        m = re.search(
+            r'<span[^>]*>\s*\[?(\d{4}[-/.]\d{1,2}[-/.]\d{1,2})\]?\s*</span>\s*'
+            r'<a[^>]*href="([^"]+)"[^>]*>(.*?)</a>', block, re.S)
+        if not m:
+            continue
+        date = _norm_date(m.group(1))
+        if not date:
+            continue
+        title = clean_title(re.sub(r"<[^>]+>", "", m.group(3)))
+        if title:
+            items.append((title, date, m.group(2)))
     return items
 
 
 def extract_article_text(html: str) -> str:
-    # 只取正文容器；找不到就返回空串，避免把导航/页脚里的“第二课堂”当正文
+    # 博达 CMS 用 gp-article；博物馆/生科院等用 content/article 容器
     m = re.search(r'<div[^>]*class="[^"]*gp-article[^"]*"[^>]*>', html)
+    if not m:
+        m = re.search(
+            r'<div[^>]*class="[^"]*(?:content|article|news_content|vsbcontent)[^"]*"[^>]*>',
+            html, re.I)
     if not m:
         return ""
     return strip_tags(html[m.end():m.end() + 60000])
@@ -66,15 +99,15 @@ def is_relevant(title: str, text: str) -> bool:
     """保留与第二课堂/可报名活动相关的条目，过滤公示、评奖和活动回顾。"""
     if any(x in title for x in ("公示", "名单", "评选", "推荐", "喜报",
                                 "顺利", "圆满", "落幕", "收官", "纪实",
-                                "回顾", "总结", "侧记")):
+                                "回顾", "总结", "侧记", "成功举办")):
         return False
     blob = title + "\n" + text
     if "第二课堂" in blob or "学分" in blob:
         return True
     if "报名" in blob or "招募" in blob:
         return True
-    activity_words = ("讲座", "报告会", "沙龙", "论坛", "宣讲",
-                      "培训", "竞赛", "大赛", "活动预告")
+    activity_words = ("讲座", "报告会", "沙龙", "论坛", "宣讲", "培训",
+                      "竞赛", "大赛", "活动预告", "活动通知", "活动")
     return any(word in title for word in activity_words)
 
 

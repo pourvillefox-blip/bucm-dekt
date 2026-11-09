@@ -68,6 +68,16 @@ header p{margin:0;opacity:.82;font-size:14px;max-width:720px}
 
 /* cards */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px;align-items:start}
+.columns{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:start;margin-bottom:10px}
+.col{min-width:0}
+.col-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 10px;padding:9px 13px;border-radius:12px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
+.col-head h2{font-size:14px;margin:0;font-weight:700}
+.col-head .n{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.col[data-level="A"] .col-head{border-left:4px solid var(--primary)}
+.col[data-level="B"] .col-head{border-left:4px solid var(--accent)}
+.col[data-level="C"] .col-head{border-left:4px solid var(--gray)}
+.col .grid{display:flex;flex-direction:column;gap:14px}
+.col-empty{color:var(--muted);font-size:13px;text-align:center;padding:24px 10px;border:1px dashed var(--line);border-radius:12px;background:#fbfcf9}
 .card{
   background:var(--card);border:1px solid var(--line);border-radius:16px;padding:17px 18px 15px;
   box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;
@@ -113,6 +123,9 @@ footer ul{margin:0 0 16px;padding-left:18px}
 footer li{margin:3px 0}
 .disclaimer{background:#fffaf0;border:1px solid #f0e2c8;border-radius:12px;padding:12px 15px;color:#6b5a36;margin-bottom:16px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:900px){
+  .columns{grid-template-columns:1fr}
+}
 @media (max-width:560px){
   html,body{overflow-x:hidden}
   .grid{grid-template-columns:1fr}
@@ -181,12 +194,6 @@ footer li{margin:3px 0}
       <button class="chip" data-time="90" aria-pressed="false">近 90 天</button>
       <button class="chip" data-time="all" aria-pressed="false">全部时间</button>
     </div>
-    <div class="chips" id="level-chips" role="group" aria-label="核验等级筛选">
-      <button class="chip" data-level="all" aria-pressed="true">全部等级</button>
-      <button class="chip" data-level="A" aria-pressed="false">A 官方明确</button>
-      <button class="chip" data-level="B" aria-pressed="false">B 官方提及</button>
-      <button class="chip" data-level="C" aria-pressed="false">C 待核实</button>
-    </div>
     <div class="chips" id="source-chips" role="group" aria-label="来源筛选">
       <button class="chip" data-source="all" aria-pressed="true">全部来源</button>
       <button class="chip" data-source="official" aria-pressed="false">官方</button>
@@ -197,8 +204,23 @@ footer li{margin:3px 0}
 
   <p class="count" id="count" aria-live="polite">—</p>
   <p class="notice" id="notice" hidden>当前筛选范围内没有可报名的活动（均未注明报名截止）。第二课堂报名请到企业微信「微课堂」搜索“团委第二课堂”。</p>
-  <section class="grid" id="grid"></section>
-  <div class="empty" id="empty" hidden><b>近期没有匹配的活动</b>试试放宽时间/等级/来源筛选；第二课堂报名在企业微信「微课堂」，搜索“团委第二课堂”。</div>
+  <section class="columns" id="columns">
+    <div class="col" data-level="A">
+      <div class="col-head"><h2>A 官方明确</h2><span class="n" id="count-A">0</span></div>
+      <div class="grid" id="grid-A"></div>
+      <div class="col-empty" id="empty-A" hidden>这一栏暂时没有条目</div>
+    </div>
+    <div class="col" data-level="B">
+      <div class="col-head"><h2>B 官方提及</h2><span class="n" id="count-B">0</span></div>
+      <div class="grid" id="grid-B"></div>
+      <div class="col-empty" id="empty-B" hidden>这一栏暂时没有条目</div>
+    </div>
+    <div class="col" data-level="C">
+      <div class="col-head"><h2>C 待核实线索</h2><span class="n" id="count-C">0</span></div>
+      <div class="grid" id="grid-C"></div>
+      <div class="col-empty" id="empty-C" hidden>这一栏暂时没有条目</div>
+    </div>
+  </section>
 
   <footer>
     <div class="disclaimer">
@@ -223,7 +245,7 @@ window.__DEKT_DATA__ = /*__DATA__*/null;
 (function () {
   const DATA = window.__DEKT_DATA__ || { items: [], generated_at: "", sources: [] };
   const items = DATA.items || [];
-  const state = { q: "", status: "all", level: "all", source: "all", time: "30" };
+  const state = { q: "", status: "all", source: "all", time: "30" };
   const $ = (id) => document.getElementById(id);
 
   const STATUS_TEXT = { active: "进行中", ended: "已结束", unknown: "待确认" };
@@ -296,7 +318,6 @@ window.__DEKT_DATA__ = /*__DATA__*/null;
 
   function matches(it) {
     if (state.status !== "all" && statusOf(it) !== state.status) return false;
-    if (state.level !== "all" && it.source_level !== state.level) return false;
     if (state.source !== "all" && it.source_type !== state.source) return false;
     if (state.time !== "all") {
       const n = parseInt(state.time, 10);
@@ -339,10 +360,19 @@ window.__DEKT_DATA__ = /*__DATA__*/null;
       + '</article>';
   }
 
+  const LEVELS = ["A", "B", "C"];
+
   function render() {
     const list = items.filter(matches);
-    $("grid").innerHTML = list.map(card).join("");
-    $("empty").hidden = list.length > 0;
+    let total = 0;
+    LEVELS.forEach((lv) => {
+      const sub = list.filter((i) => (i.source_level || "C") === lv)
+                      .sort((a, b) => (b.publish_date || "").localeCompare(a.publish_date || ""));
+      total += sub.length;
+      $("grid-" + lv).innerHTML = sub.map(card).join("");
+      $("count-" + lv).textContent = sub.length;
+      $("empty-" + lv).hidden = sub.length > 0;
+    });
     $("notice").hidden = list.length === 0 || list.some((i) => statusOf(i) === "active");
     $("count").textContent = "共 " + list.length + " 条" + (list.length !== items.length ? "（已筛选，总计 " + items.length + " 条）" : "");
     $("s-total").textContent = items.length;
@@ -358,13 +388,6 @@ window.__DEKT_DATA__ = /*__DATA__*/null;
     btn.addEventListener("click", () => {
       state.status = btn.dataset.status;
       document.querySelectorAll("#status-chips .chip").forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
-      render();
-    });
-  });
-  document.querySelectorAll("#level-chips .chip").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      state.level = btn.dataset.level;
-      document.querySelectorAll("#level-chips .chip").forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
       render();
     });
   });
