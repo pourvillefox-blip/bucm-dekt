@@ -5,6 +5,7 @@ import gzip
 import json
 import logging
 import os
+from logging.handlers import RotatingFileHandler
 import re
 import tempfile
 import time
@@ -33,7 +34,8 @@ def setup_logger(name: str) -> logging.Logger:
     if not logger.handlers:
         logger.setLevel(logging.INFO)
         fmt = logging.Formatter("%(asctime)s %(levelname)s %(message)s", "%Y-%m-%d %H:%M:%S")
-        fh = logging.FileHandler(LOG_DIR / f"{name}.log", encoding="utf-8")
+        fh = RotatingFileHandler(
+            LOG_DIR / f"{name}.log", maxBytes=2_000_000, backupCount=3, encoding="utf-8")
         fh.setFormatter(fmt)
         sh = logging.StreamHandler()
         sh.setFormatter(fmt)

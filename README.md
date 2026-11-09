@@ -102,10 +102,17 @@ scripts\setup_tasks.bat
 
 | 任务 | 频率 | 作用 |
 |---|---|---|
-| `BUCM-DEKT-Update` | 每 3 天 03:00 | 抓取 + 生成网页 |
-| `BUCM-DEKT-Health` | 每 2 小时 | 检查页面/数据，异常发邮件 |
+| `BUCM-DEKT-Update` | 每 3 天 03:00 | 官网 + 公众号 + 构建 + 部署 |
+| `BUCM-DEKT-WeChat` | 每 12 小时 09:30/21:30 | 只刷新公众号 RSS + 构建 + 部署 |
+| `BUCM-DEKT-Health` | 每 2 小时 | 检查页面、数据、WeRSS 登录态，异常发邮件 |
 
 > ⚠️ 任务只在电脑开机、已登录且未休眠时执行；关机期间不会更新，也不会告警。要 7×24 更新，需要云服务器、GitHub Actions 或外部探针。
+
+## 备份与日志
+
+- 每次 3 天完整更新前自动备份 `config.json`、`data/manual.json` 和 WeRSS 的 `werss.db` 到 `backups/<时间戳>/`，保留最近 10 份。
+- 日志按 2 MB 轮转，保留 3 个历史文件。
+- Git 已固定使用 OpenSSL HTTPS 后端（`git config --global http.sslBackend openssl`），避免 schannel 偶发握手失败。
 >
 > 任务已设置为“允许电池供电、错过时间后补跑”，但仍是交互式登录模式。
 

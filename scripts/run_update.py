@@ -79,6 +79,7 @@ def main() -> int:
     saved: dict[Path, Path] = {}
 
     try:
+        run("backup.py", required=False, timeout=120)
         saved = backup()
         run("crawl_official.py", required=True)
         run("crawl_wechat.py", required=False)
