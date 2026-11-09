@@ -70,7 +70,10 @@ def check_data_freshness(cfg: dict) -> tuple[bool, str]:
 
 def check_sources() -> tuple[bool, str]:
     counts = {}
-    for name in ("official.json", "wechat.json", "manual.json"):
+    names = ["official.json", "wechat.json", "manual.json"]
+    if (DATA_DIR / "rss.json").exists():
+        names.append("rss.json")
+    for name in names:
         try:
             data = read_json_strict(DATA_DIR / name)
         except json.JSONDecodeError as exc:

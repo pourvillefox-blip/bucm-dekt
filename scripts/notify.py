@@ -70,6 +70,10 @@ def send_email(subject: str, body: str, topic: str = "default") -> bool:
         _save_state(state)
         log.info("告警邮件已发送：%s", subject)
         return True
+    except smtplib.SMTPServerDisconnected as exc:
+        log.error("邮件发送失败：SMTP 在登录阶段被断开。请检查授权码是否有效、"
+                  "QQ 邮箱是否已开启 POP3/SMTP 服务（%s）", exc)
+        return False
     except Exception as exc:  # noqa: BLE001
         log.error("邮件发送失败：%s", exc)
         return False

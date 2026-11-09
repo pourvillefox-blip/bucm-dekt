@@ -108,6 +108,21 @@ scripts\setup_tasks.bat
 >
 > 任务已设置为“允许电池供电、错过时间后补跑”，但仍是交互式登录模式。
 
+## 接入微信公众号 RSS（可选）
+
+如果后续部署了 Wechat2RSS 或 WeRSS，可在 `config.json` 里打开 RSS 通道：
+
+```json
+"wechat_rss": {
+  "enabled": true,
+  "feeds": [
+    {"name": "岐黄青年汇", "url": "https://你的RSS服务/feed/xxxx"}
+  ]
+}
+```
+
+然后运行 `python scripts\crawl_rss.py`。只接受标题/摘要里明确提到“第二课堂”且与北中医相关的条目，结果写入 `data/rss.json`，构建时自动合并。
+
 ## 手动补充公众号活动
 
 微信反爬严格，自动化只能抓到少量线索。你在微信里看到相关活动时，把信息加到 `data/manual.json` 的 `items` 数组：

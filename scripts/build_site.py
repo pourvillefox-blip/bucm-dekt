@@ -67,7 +67,7 @@ def normalize(item: dict, today: date) -> dict | None:
 
 def dedupe(items: list[dict]) -> list[dict]:
     """同一活动可能在官网和公众号重复出现，优先保留官方/高等级那条。"""
-    rank = {"official": 3, "manual": 2, "wechat": 1}
+    rank = {"official": 4, "manual": 3, "rss": 2, "wechat": 1}
     level_rank = {"A": 3, "B": 2, "C": 1}
     chosen: dict[str, dict] = {}
     for item in items:
@@ -111,15 +111,19 @@ def main() -> None:
 
     official = load_source("official.json")
     wechat = load_source("wechat.json")
+    rss = load_source("rss.json")
     manual = load_source("manual.json")
-    log.info("读入 官网 %d 条 / 公众号 %d 条 / 人工 %d 条", len(official), len(wechat), len(manual))
+    log.info("读入 官网 %d 条 / 公众号 %d 条 / RSS %d 条 / 人工 %d 条",
+             len(official), len(wechat), len(rss), len(manual))
 
-    items = [x for x in (normalize(i, today) for i in official + wechat + manual) if x]
+    items = [x for x in (normalize(i, today) for i in official + wechat + rss + manual) if x]
     items = dedupe(items)
     items.sort(key=sort_key, reverse=True)
 
     sources = [s["name"] for s in cfg.get("official_sources", [])]
     sources.append("微信公众号（搜狗微信检索，仅作线索）")
+    if rss:
+        sources.append("微信公众号 RSS（Wechat2RSS / WeRSS）")
     sources.append("人工核验补充（公众号原文）")
 
     data = {

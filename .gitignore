@@ -10,6 +10,7 @@ data/*.png
 data/*.html
 data/official.json
 data/wechat.json
+data/rss.json
 site/index.html
 __pycache__/
 *.pyc

@@ -4,6 +4,17 @@ from __future__ import annotations
 import sys
 
 from common import clean_summary, clean_title, extract_credit, extract_credit_type, extract_deadline, safe_url
+from crawl_rss import parse_feed
+
+SAMPLE_RSS = """<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"><channel><title>test</title>
+<item>
+  <title>第二课堂学分讲座通知</title>
+  <link>https://example.com/a</link>
+  <pubDate>Sat, 08 Nov 2026 10:00:00 GMT</pubDate>
+  <description>参与可获第二课堂0.1学分</description>
+</item>
+</channel></rss>""".encode("utf-8")
 
 DEADLINE_CASES = [
     ("活动时间：11月1日，报名截止：10月20日", "2026-10-01", "2026-10-20"),
@@ -83,11 +94,16 @@ def run() -> int:
             failures += 1
             print(f"FAIL url {text!r} -> {got!r}, expected {expected!r}")
 
+    feed = parse_feed(SAMPLE_RSS)
+    if len(feed) != 1 or feed[0]["url"] != "https://example.com/a" or feed[0]["publish_date"] != "2026-11-08":
+        failures += 1
+        print(f"FAIL rss parse -> {feed!r}")
+
     if failures:
         print(f"{failures} 个用例失败")
         return 1
     total = (len(DEADLINE_CASES) + len(CREDIT_CASES) + len(TYPE_CASES)
-             + len(TITLE_CASES) + len(SUMMARY_CASES) + len(URL_CASES))
+             + len(TITLE_CASES) + len(SUMMARY_CASES) + len(URL_CASES) + 1)
     print(f"全部通过（{total} 个用例）")
     return 0
 

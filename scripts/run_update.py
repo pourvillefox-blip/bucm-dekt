@@ -82,6 +82,7 @@ def main() -> int:
         saved = backup()
         run("crawl_official.py", required=True)
         run("crawl_wechat.py", required=False)
+        run("crawl_rss.py", required=False)
         run("build_site.py", required=True)
 
         combined = read_json_strict(DATA_DIR / "combined.json") or {}
