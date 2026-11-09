@@ -118,9 +118,13 @@ def crawl() -> list[dict]:
                 except ValueError:
                     pass
             blob = entry["title"] + " " + entry["summary"]
-            if "第二课堂" not in blob:
-                continue
-            if not any(tok in blob or tok in name for tok in BUCM_TOKENS):
+            is_bucm_account = any(tok in blob or tok in name for tok in BUCM_TOKENS)
+            has_credit = "第二课堂" in blob or "学分" in blob
+            has_activity = any(k in blob for k in (
+                "讲座", "活动", "招新", "加入", "报名", "招募",
+                "社团", "志愿", "实践", "培训", "预告"))
+            # 北中医账号的活动类最新文章即使没写学分也收录，标 C 级线索
+            if not has_credit and not (is_bucm_account and has_activity):
                 continue
             key = re.sub(r"\W+", "", entry["title"])[:40]
             if key in seen:
@@ -129,7 +133,7 @@ def crawl() -> list[dict]:
 
             credit, evidence = extract_credit(blob)
             deadline = extract_deadline(blob, pub or None)
-            level = "B" if any(tok in name for tok in ACCOUNT_TOKENS) else "C"
+            level = "B" if has_credit else "C"
             results.append({
                 "title": entry["title"],
                 "account": name,

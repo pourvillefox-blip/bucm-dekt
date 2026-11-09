@@ -1,8 +1,44 @@
 {
-  "generated_at": "2026-11-09 09:47",
+  "generated_at": "2026-11-09 11:37",
   "cutoff_date": "2025-09-01",
-  "count": 50,
+  "count": 53,
   "items": [
+    {
+      "title": "【社联｜社团文化月】叮！本年度社团文化月高能来袭！",
+      "account": "bucm社联",
+      "publish_date": "2026-11-09",
+      "url": "https://mp.weixin.qq.com/s/vRevylqsdmQcM1NIj_8NUg",
+      "summary": "",
+      "credit": null,
+      "credit_type": "社团活动",
+      "deadline": null,
+      "status": "unknown",
+      "source_level": "C",
+      "source_type": "rss",
+      "evidence": "",
+      "link_ok": true,
+      "checked_at": "2026-11-09",
+      "verified_at": "2026-11-09",
+      "id": "57bd53a86b9f"
+    },
+    {
+      "title": "欢迎加入北京中医药大学经典与科研协会！",
+      "account": "中医学院青协经典与科研协会",
+      "publish_date": "2026-11-09",
+      "url": "https://mp.weixin.qq.com/s/9mVpDkWVkajD28QDhBOs2A",
+      "summary": "",
+      "credit": null,
+      "credit_type": "综合素质",
+      "deadline": null,
+      "status": "unknown",
+      "source_level": "C",
+      "source_type": "rss",
+      "evidence": "",
+      "link_ok": true,
+      "checked_at": "2026-11-09",
+      "verified_at": "2026-11-09",
+      "id": "0cb453d88ae9"
+    },
     {
       "title": "修古籍残叶悟岐黄匠心——北京中医药大学学子参加古籍修复沉浸式体验活动",
       "account": "校团委·新闻动态",
@@ -873,6 +909,24 @@
       "id": "3ac7199a8372"
     },
     {
+      "title": "建校70周年教育教学系列活动讲座预告|赵继福教授《脉诊为导向的疑难病诊疗》",
+      "account": "岐黄青年汇",
+      "publish_date": "2026-11-09",
+      "url": "https://mp.weixin.qq.com/s/8uRaL6y6Fe3uifrRn5bVhg",
+      "summary": "",
+      "credit": null,
+      "credit_type": "讲座活动",
+      "deadline": null,
+      "status": "active",
+      "source_level": "C",
+      "source_type": "rss",
+      "evidence": "",
+      "link_ok": true,
+      "checked_at": "2026-11-09",
+      "verified_at": "2026-11-09",
+      "id": "7d52aa8ce54a"
+    },
+    {
       "title": "【活动通知】校庆特辑｜博物馆文化周五大活动重磅来袭",
       "account": "中医药博物馆·通知公告",
       "publish_date": "2026-10-08",
@@ -901,6 +955,7 @@
     "中医药博物馆·通知公告",
     "生命科学学院·团学风采",
     "微信公众号（搜狗微信检索，仅作线索）",
+    "微信公众号 RSS（Wechat2RSS / WeRSS）",
     "人工核验补充（公众号原文）"
   ]
 }
