@@ -6,6 +6,7 @@ import re
 import sys
 import urllib.request
 from datetime import datetime, timedelta
+from urllib.parse import urlencode
 
 from common import DOCS_DIR, DATA_DIR, ROOT, UA, load_config, read_json, read_json_strict, setup_logger, write_json
 from notify import send_email
@@ -116,6 +117,42 @@ def check_last_update(cfg: dict) -> tuple[bool, str]:
     return True, f"上次抓取成功（{info.get('count', '?')} 条）"
 
 
+def check_werss(cfg: dict) -> tuple[bool, str]:
+    """检查 WeRSS 服务与微信读书登录态，避免 Cookie 过期后静默断流。"""
+    rss = cfg.get("wechat_rss", {}) or {}
+    if not rss.get("enabled"):
+        return True, "未启用公众号 RSS"
+    base = str(rss.get("admin_url", "")).rstrip("/")
+    if not base:
+        return True, "未配置 WeRSS 地址"
+
+    opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+    try:
+        with opener.open(base + "/", timeout=15) as resp:
+            if resp.status != 200:
+                return False, f"WeRSS 返回 HTTP {resp.status}"
+        data = urlencode({
+            "username": rss.get("username", ""),
+            "password": rss.get("password", ""),
+        }).encode("utf-8")
+        req = urllib.request.Request(
+            base + "/api/v1/wx/auth/login", data=data,
+            headers={"Content-Type": "application/x-www-form-urlencoded"})
+        with opener.open(req, timeout=20) as resp:
+            token = json.loads(resp.read().decode("utf-8"))["data"]["access_token"]
+        req = urllib.request.Request(
+            base + "/api/v1/wx/weread/qr/status",
+            headers={"Authorization": "Bearer " + token})
+        with opener.open(req, timeout=20) as resp:
+            status = json.loads(resp.read().decode("utf-8")).get("data", {})
+    except Exception as exc:  # noqa: BLE001
+        return False, f"WeRSS 不可用：{exc}"
+
+    if not status.get("login_status"):
+        return False, f"微信读书登录态异常：{status.get('msg', '未知')}"
+    return True, "WeRSS 正常，微信读书已授权"
+
+
 def check_remote(cfg: dict, local_count: int) -> tuple[bool, str]:
     url = (cfg.get("site_url") or "").strip()
     if not url:
@@ -167,6 +204,7 @@ def main() -> int:
     if page_ok:
         checks.append(("consistency", check_consistency(page_count)))
     checks.append(("last_update", check_last_update(cfg)))
+    checks.append(("werss", check_werss(cfg)))
     checks.append(("remote", check_remote(cfg, page_count)))
 
     failures = [(name, msg) for name, (ok, msg) in checks if not ok]
