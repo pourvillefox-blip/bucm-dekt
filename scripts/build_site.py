@@ -15,6 +15,7 @@ from common import (
     clean_summary,
     clean_title,
     compute_status,
+    parse_iso,
     load_config,
     read_json_strict,
     safe_url,
@@ -44,8 +45,10 @@ def normalize(item: dict, today: date) -> dict | None:
     status = compute_status(item.get("deadline"), item.get("publish_date"), today)
     # 没有截止日期的新闻/通知，不轻易标成“进行中”
     if not item.get("deadline") and status == "active":
-        if not any(k in title for k in ("报名", "招募", "预告", "招新", "加入",
-                                        "即将", "来袭", "开放", "启动")):
+        pub_date = parse_iso(item.get("publish_date"))
+        recent = bool(pub_date and 0 <= (today - pub_date).days <= 14)
+        if not recent or not any(k in title for k in (
+                "报名", "招募", "预告", "招新", "加入", "即将", "来袭", "开放", "启动")):
             status = "unknown"
 
     summary = str(item.get("summary") or "")
