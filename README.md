@@ -10,6 +10,7 @@
 - 官网抓取：8 个栏目可用，最近一次入库 44 条。
 - 公众号：搜狗微信线索 4 条 + WeRSS 微信读书通道 3 条（含当天活动）。
 - 人工补充：3 条已核验的公众号活动。
+- 当前共 53 条：A 级 1、B 级 7、C 级 45；默认“近 30 天”7 条。
 - 定时任务：本机每 3 天抓取并自动 push；每 2 小时健康检查。
 - 邮件告警：已配置并测试通过（发件 `3026664502@qq.com` → 收件 `pourvillefox@qq.com`）。
 
@@ -118,6 +119,8 @@ scripts\setup_tasks.bat
 - 守护任务：`WeRSS-KeepAlive` 每 30 分钟检查一次，未运行则启动
 
 `config.json` 的 `wechat_rss` 已填好四个 feed 地址，并开启 `refresh`：每次 `crawl_rss.py` 会先让 WeRSS 更新四个号的最新文章，再读取 feed。
+
+RSS 解析已读取 `<content:encoded>` 全文，因此能提取摘要、学分数和报名截止时间；校内官方账号且正文明确写“第二课堂 X 学分”的条目会升到 A 级。
 
 ```json
 "wechat_rss": {
