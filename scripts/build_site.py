@@ -44,7 +44,7 @@ def normalize(item: dict, today: date) -> dict | None:
     status = compute_status(item.get("deadline"), item.get("publish_date"), today)
     # 没有截止日期的新闻/通知，不轻易标成“进行中”
     if not item.get("deadline") and status == "active":
-        if not any(k in title for k in ("报名", "招募", "预告", "通知")):
+        if not any(k in title for k in ("报名", "招募", "预告", "通知", "加入", "招新", "活动")):
             status = "unknown"
 
     summary = str(item.get("summary") or "")

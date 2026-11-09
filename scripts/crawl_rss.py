@@ -82,10 +82,18 @@ def parse_feed(raw: bytes) -> list[dict]:
         title = clean_title(strip_tags(_child_text(node, ("title",))))
         link = safe_url(_child_link(node))
         pub = _parse_date(_child_text(node, ("pubdate", "published", "updated", "date")))
-        desc = clean_summary(strip_tags(
-            _child_text(node, ("description", "summary", "content", "encoded"))))
+        # RSS 的全文在 <content:encoded> 里（本地名是 encoded），优先用它
+        raw = (_child_text(node, ("encoded",))
+               or _child_text(node, ("content", "description", "summary")))
+        text = strip_tags(raw)
         if title and link:
-            entries.append({"title": title, "url": link, "publish_date": pub, "summary": desc})
+            entries.append({
+                "title": title,
+                "url": link,
+                "publish_date": pub,
+                "summary": clean_summary(text),
+                "full_text": clean_summary(text, 4000),
+            })
     return entries
 
 
@@ -164,10 +172,10 @@ def crawl() -> list[dict]:
                         continue
                 except ValueError:
                     pass
-            blob = entry["title"] + " " + entry["summary"]
+            blob = entry["title"] + " " + (entry.get("full_text") or entry["summary"])
             is_bucm_account = any(tok in blob or tok in name for tok in BUCM_TOKENS)
             has_credit = "第二课堂" in blob or "学分" in blob
-            has_activity = any(k in blob for k in (
+            has_activity = any(k in entry["title"] for k in (
                 "讲座", "活动", "招新", "加入", "报名", "招募",
                 "社团", "志愿", "实践", "培训", "预告"))
             # 北中医账号的活动类最新文章即使没写学分也收录，标 C 级线索
@@ -180,7 +188,12 @@ def crawl() -> list[dict]:
 
             credit, evidence = extract_credit(blob)
             deadline = extract_deadline(blob, pub or None)
-            level = "B" if has_credit else "C"
+            if has_credit and any(tok in name for tok in ACCOUNT_TOKENS):
+                level = "A"
+            elif has_credit:
+                level = "B"
+            else:
+                level = "C"
             results.append({
                 "title": entry["title"],
                 "account": name,
