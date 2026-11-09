@@ -64,6 +64,7 @@ header p{margin:0;opacity:.82;font-size:14px;max-width:720px}
 .chip:hover{border-color:#c9d4ce}
 .chip[aria-pressed="true"]{background:var(--primary);border-color:var(--primary);color:#fff}
 .count{margin:0 0 14px;color:var(--muted);font-size:13px}
+.notice{margin:0 0 14px;padding:10px 14px;border-radius:10px;background:#fffaf0;border:1px solid #f0e2c8;color:#6b5a36;font-size:13px}
 
 /* cards */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px;align-items:start}
@@ -142,7 +143,7 @@ footer li{margin:3px 0}
 <main class="wrap">
   <section class="stats" aria-label="数据概览">
     <div class="stat"><b id="s-total">0</b><span>收录条目</span></div>
-    <div class="stat"><b id="s-active">0</b><span>进行中</span></div>
+    <div class="stat"><b id="s-recent">0</b><span>近 30 天</span></div>
     <div class="stat"><b id="s-official">0</b><span>官方来源</span></div>
     <div class="stat"><b id="s-a">0</b><span>A 级核验</span></div>
   </section>
@@ -174,6 +175,12 @@ footer li{margin:3px 0}
       <button class="chip" data-status="unknown" aria-pressed="false">待确认</button>
       <button class="chip" data-status="ended" aria-pressed="false">已结束</button>
     </div>
+    <div class="chips" id="time-chips" role="group" aria-label="时间筛选">
+      <button class="chip" data-time="7" aria-pressed="false">近 7 天</button>
+      <button class="chip" data-time="30" aria-pressed="true">近 30 天</button>
+      <button class="chip" data-time="90" aria-pressed="false">近 90 天</button>
+      <button class="chip" data-time="all" aria-pressed="false">全部时间</button>
+    </div>
     <div class="chips" id="level-chips" role="group" aria-label="核验等级筛选">
       <button class="chip" data-level="all" aria-pressed="true">全部等级</button>
       <button class="chip" data-level="A" aria-pressed="false">A 官方明确</button>
@@ -189,8 +196,9 @@ footer li{margin:3px 0}
   </div>
 
   <p class="count" id="count" aria-live="polite">—</p>
+  <p class="notice" id="notice" hidden>当前筛选范围内没有可报名的活动（均未注明报名截止）。第二课堂报名请到企业微信「微课堂」搜索“团委第二课堂”。</p>
   <section class="grid" id="grid"></section>
-  <div class="empty" id="empty" hidden><b>没有匹配的条目</b>换个关键词或筛选条件试试。</div>
+  <div class="empty" id="empty" hidden><b>近期没有匹配的活动</b>试试放宽时间/等级/来源筛选；第二课堂报名在企业微信「微课堂」，搜索“团委第二课堂”。</div>
 
   <footer>
     <div class="disclaimer">
@@ -215,7 +223,7 @@ window.__DEKT_DATA__ = /*__DATA__*/null;
 (function () {
   const DATA = window.__DEKT_DATA__ || { items: [], generated_at: "", sources: [] };
   const items = DATA.items || [];
-  const state = { q: "", status: "all", level: "all", source: "all" };
+  const state = { q: "", status: "all", level: "all", source: "all", time: "30" };
   const $ = (id) => document.getElementById(id);
 
   const STATUS_TEXT = { active: "进行中", ended: "已结束", unknown: "待确认" };
@@ -248,6 +256,35 @@ window.__DEKT_DATA__ = /*__DATA__*/null;
     return it.status || "unknown";
   }
 
+  function dateNDaysAgo(n) {
+    const d = new Date();
+    d.setDate(d.getDate() - n);
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  }
+
+  function daysSince(s) {
+    s = fmtDate(s);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(s)) return null;
+    const then = new Date(s + "T00:00:00");
+    const now = new Date(todayStr() + "T00:00:00");
+    return Math.round((now - then) / 86400000);
+  }
+
+  function relDate(s) {
+    const d = daysSince(s);
+    if (d === null) return "";
+    if (d === 0) return "今天";
+    if (d === 1) return "昨天";
+    if (d < 30) return d + " 天前";
+    if (d < 365) return Math.floor(d / 30) + " 个月前";
+    return Math.floor(d / 365) + " 年前";
+  }
+
+  function withinDays(it, n) {
+    const d = daysSince(it.publish_date);
+    return d !== null && d >= 0 && d <= n;
+  }
+
   function safeHref(u) {
     try {
       const x = new URL(u, location.href);
@@ -261,6 +298,13 @@ window.__DEKT_DATA__ = /*__DATA__*/null;
     if (state.status !== "all" && statusOf(it) !== state.status) return false;
     if (state.level !== "all" && it.source_level !== state.level) return false;
     if (state.source !== "all" && it.source_type !== state.source) return false;
+    if (state.time !== "all") {
+      const n = parseInt(state.time, 10);
+      const dl = fmtDate(it.deadline);
+      const hasDl = /^\d{4}-\d{2}-\d{2}$/.test(dl);
+      const stillValid = hasDl && dl >= todayStr();
+      if (!stillValid && !withinDays(it, n)) return false;
+    }
     if (state.q) {
       const q = state.q.toLowerCase();
       const blob = [it.title, it.account, it.summary, it.evidence, it.credit_type].join(" ").toLowerCase();
@@ -287,7 +331,7 @@ window.__DEKT_DATA__ = /*__DATA__*/null;
       + '<span class="badge lv ' + esc(it.source_level) + '">' + esc(LEVEL_TEXT[it.source_level] || it.source_level) + '</span>'
       + '</div>'
       + '<h3><a href="' + esc(href) + '" target="_blank" rel="noopener noreferrer">' + esc(it.title) + '</a></h3>'
-      + '<div class="card-meta"><span>' + esc(it.account) + '</span><span>' + esc(fmtDate(it.publish_date)) + '</span></div>'
+      + '<div class="card-meta"><span>' + esc(it.account) + '</span><span>' + esc(fmtDate(it.publish_date)) + (relDate(it.publish_date) ? ' · ' + esc(relDate(it.publish_date)) : '') + '</span></div>'
       + summary
       + evidence
       + '<div class="credit-row">' + credit + deadline + '</div>'
@@ -299,9 +343,13 @@ window.__DEKT_DATA__ = /*__DATA__*/null;
     const list = items.filter(matches);
     $("grid").innerHTML = list.map(card).join("");
     $("empty").hidden = list.length > 0;
+    $("notice").hidden = list.length === 0 || list.some((i) => statusOf(i) === "active");
     $("count").textContent = "共 " + list.length + " 条" + (list.length !== items.length ? "（已筛选，总计 " + items.length + " 条）" : "");
     $("s-total").textContent = items.length;
-    $("s-active").textContent = items.filter((i) => statusOf(i) === "active").length;
+    $("s-recent").textContent = items.filter((i) => {
+      const dl = fmtDate(i.deadline);
+      return withinDays(i, 30) || (/^\d{4}-\d{2}-\d{2}$/.test(dl) && dl >= todayStr());
+    }).length;
     $("s-official").textContent = items.filter((i) => i.source_type === "official").length;
     $("s-a").textContent = items.filter((i) => i.source_level === "A").length;
   }
@@ -324,6 +372,13 @@ window.__DEKT_DATA__ = /*__DATA__*/null;
     btn.addEventListener("click", () => {
       state.source = btn.dataset.source;
       document.querySelectorAll("#source-chips .chip").forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+      render();
+    });
+  });
+  document.querySelectorAll("#time-chips .chip").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      state.time = btn.dataset.time;
+      document.querySelectorAll("#time-chips .chip").forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
       render();
     });
   });
