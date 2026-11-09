@@ -95,6 +95,7 @@ header p{margin:0;opacity:.82;font-size:14px;max-width:720px}
 .badge.ended{background:#eef0ef;color:#6b7a73}
 .badge.unknown{background:#fdf3e3;color:var(--warn)}
 .badge.lv{background:#f2f4f3;color:#5b6b64}
+.src{font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:1px 6px;margin-left:auto}
 .badge.lv.A{background:var(--primary-soft);color:var(--primary)}
 .badge.lv.B{background:#fbf0dc;color:var(--accent)}
 .card h3{margin:0;font-size:16.5px;line-height:1.45;font-weight:700}
@@ -156,6 +157,7 @@ footer li{margin:3px 0}
 <main class="wrap">
   <section class="stats" aria-label="数据概览">
     <div class="stat"><b id="s-total">0</b><span>收录条目</span></div>
+    <div class="stat"><b id="s-today">0</b><span>今日新增</span></div>
     <div class="stat"><b id="s-recent">0</b><span>近 30 天</span></div>
     <div class="stat"><b id="s-official">0</b><span>官方来源</span></div>
     <div class="stat"><b id="s-a">0</b><span>A 级核验</span></div>
@@ -189,6 +191,7 @@ footer li{margin:3px 0}
       <button class="chip" data-status="ended" aria-pressed="false">已结束</button>
     </div>
     <div class="chips" id="time-chips" role="group" aria-label="时间筛选">
+      <button class="chip" data-time="3" aria-pressed="false">近 3 天</button>
       <button class="chip" data-time="7" aria-pressed="false">近 7 天</button>
       <button class="chip" data-time="30" aria-pressed="true">近 30 天</button>
       <button class="chip" data-time="90" aria-pressed="false">近 90 天</button>
@@ -208,17 +211,17 @@ footer li{margin:3px 0}
     <div class="col" data-level="A">
       <div class="col-head"><h2>A 官方明确</h2><span class="n" id="count-A">0</span></div>
       <div class="grid" id="grid-A"></div>
-      <div class="col-empty" id="empty-A" hidden>这一栏暂时没有条目</div>
+      <div class="col-empty" id="empty-A" hidden>暂无 A 级条目：原文未明确写出第二课堂学分数</div>
     </div>
     <div class="col" data-level="B">
       <div class="col-head"><h2>B 官方提及</h2><span class="n" id="count-B">0</span></div>
       <div class="grid" id="grid-B"></div>
-      <div class="col-empty" id="empty-B" hidden>这一栏暂时没有条目</div>
+      <div class="col-empty" id="empty-B" hidden>暂无 B 级条目</div>
     </div>
     <div class="col" data-level="C">
       <div class="col-head"><h2>C 待核实线索</h2><span class="n" id="count-C">0</span></div>
       <div class="grid" id="grid-C"></div>
-      <div class="col-empty" id="empty-C" hidden>这一栏暂时没有条目</div>
+      <div class="col-empty" id="empty-C" hidden>暂无 C 级线索</div>
     </div>
   </section>
 
@@ -250,6 +253,7 @@ window.__DEKT_DATA__ = /*__DATA__*/null;
 
   const STATUS_TEXT = { active: "进行中", ended: "已结束", unknown: "待确认" };
   const LEVEL_TEXT = { A: "A 官方明确", B: "B 官方提及", C: "C 待核实" };
+  const SOURCE_TEXT = { official: "官网", wechat: "公众号线索", rss: "公众号 RSS", manual: "人工核验" };
   const TYPE_ORDER = ["讲座活动", "志愿服务", "社会实践", "学术科技", "社团活动", "综合素质", "未分类"];
 
   function esc(s) {
@@ -350,6 +354,7 @@ window.__DEKT_DATA__ = /*__DATA__*/null;
       + '<div class="card-top">'
       + '<span class="badge ' + esc(st) + '">' + esc(STATUS_TEXT[st] || st) + '</span>'
       + '<span class="badge lv ' + esc(it.source_level) + '">' + esc(LEVEL_TEXT[it.source_level] || it.source_level) + '</span>'
+      + '<span class="src">' + esc(SOURCE_TEXT[it.source_type] || it.source_type || "") + '</span>'
       + '</div>'
       + '<h3><a href="' + esc(href) + '" target="_blank" rel="noopener noreferrer">' + esc(it.title) + '</a></h3>'
       + '<div class="card-meta"><span>' + esc(it.account) + '</span><span>' + esc(fmtDate(it.publish_date)) + (relDate(it.publish_date) ? ' · ' + esc(relDate(it.publish_date)) : '') + '</span></div>'
@@ -376,6 +381,8 @@ window.__DEKT_DATA__ = /*__DATA__*/null;
     $("notice").hidden = list.length === 0 || list.some((i) => statusOf(i) === "active");
     $("count").textContent = "共 " + list.length + " 条" + (list.length !== items.length ? "（已筛选，总计 " + items.length + " 条）" : "");
     $("s-total").textContent = items.length;
+    $("s-today").textContent = items.filter(
+      (i) => (i.publish_date || "").slice(0, 10) === todayStr()).length;
     $("s-recent").textContent = items.filter((i) => {
       const dl = fmtDate(i.deadline);
       return withinDays(i, 30) || (/^\d{4}-\d{2}-\d{2}$/.test(dl) && dl >= todayStr());
