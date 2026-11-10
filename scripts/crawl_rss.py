@@ -177,7 +177,7 @@ def crawl() -> list[dict]:
             has_credit = "第二课堂" in blob or "学分" in blob
             has_activity = any(k in entry["title"] for k in (
                 "讲座", "活动", "招新", "加入", "报名", "招募",
-                "社团", "志愿", "实践", "培训", "预告"))
+                "社团", "志愿", "实践", "培训", "预告", "沙龙", "比赛", "大赛"))
             # 北中医账号的活动类最新文章即使没写学分也收录，标 C 级线索
             if not has_credit and not (is_bucm_account and has_activity):
                 continue

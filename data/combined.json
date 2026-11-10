@@ -1,8 +1,26 @@
 {
-  "generated_at": "2026-11-10 09:30",
+  "generated_at": "2026-11-10 10:30",
   "cutoff_date": "2025-09-01",
-  "count": 54,
+  "count": 56,
   "items": [
+    {
+      "title": "【岐黄·先声】北京中医药大学第10周志愿活动预告",
+      "account": "岐黄志愿者之家",
+      "publish_date": "2026-11-10",
+      "url": "https://mp.weixin.qq.com/s/xo7NE9UWzarj8nE3Ot1fuw",
+      "summary": "",
+      "credit": null,
+      "credit_type": "志愿服务",
+      "deadline": null,
+      "status": "active",
+      "source_level": "C",
+      "source_type": "rss",
+      "evidence": "",
+      "link_ok": true,
+      "checked_at": "2026-11-10",
+      "verified_at": "2026-11-10",
+      "id": "5dd6a400fb51"
+    },
     {
       "title": "建校70周年教育教学系列活动讲座预告|赵继福教授《脉诊为导向的疑难病诊疗》",
       "account": "岐黄青年汇",
@@ -38,6 +56,24 @@
       "checked_at": "2026-11-10",
       "verified_at": "2026-11-10",
       "id": "0cb453d88ae9"
+    },
+    {
+      "title": "北京中医药大学第四期“杏林青马”团学青年主题沙龙来啦！",
+      "account": "活动周历（校学生会）",
+      "publish_date": "2026-11-10",
+      "url": "https://mp.weixin.qq.com/s/NZSDHzKiijzC5zCEXKrWlg",
+      "summary": "",
+      "credit": null,
+      "credit_type": "讲座活动",
+      "deadline": null,
+      "status": "unknown",
+      "source_level": "C",
+      "source_type": "rss",
+      "evidence": "",
+      "link_ok": true,
+      "checked_at": "2026-11-10",
+      "verified_at": "2026-11-10",
+      "id": "0dba91f2dc25"
     },
     {
       "title": "【社联 | 微电影大赛】你是否想过一夜爆红？镜头给你一个舞台！！",
