@@ -7,6 +7,8 @@ data/*.bak
 data/alert_state.json
 data/health.json
 data/last_update.json
+data/last_wechat_update.json
+output/
 data/*.png
 data/*.html
 data/official.json
