@@ -41,8 +41,11 @@ header p{margin:0;opacity:.82;font-size:14px;max-width:720px}
 
 /* rules */
 .rules{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:22px;box-shadow:var(--shadow)}
-.rules h2{font-size:15px;margin:0 0 12px;display:flex;align-items:center;gap:8px}
-.rules h2 small{font-weight:400;color:var(--muted);font-size:12.5px}
+.rules summary{font-size:15px;font-weight:650;margin:0 0 12px;display:flex;align-items:center;gap:8px;cursor:pointer;list-style:none}
+.rules summary::-webkit-details-marker{display:none}
+.rules summary small{font-weight:400;color:var(--muted);font-size:12.5px}
+.rules summary::after{content:"▾";margin-left:auto;font-size:12px;color:var(--muted);transition:.15s}
+.rules[open] summary::after{transform:rotate(180deg)}
 .rule-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
 .rule{background:#fbfcf9;border:1px solid var(--line);border-radius:12px;padding:12px 14px}
 .rule b{display:block;font-size:13px;color:var(--muted);font-weight:600;margin-bottom:3px}
@@ -78,6 +81,10 @@ header p{margin:0;opacity:.82;font-size:14px;max-width:720px}
 .col[data-level="C"] .col-head{border-left:4px solid var(--gray)}
 .col .grid{display:flex;flex-direction:column;gap:14px}
 .col-empty{color:var(--muted);font-size:13px;text-align:center;padding:24px 10px;border:1px dashed var(--line);border-radius:12px;background:#fbfcf9}
+.mobile-tabs{display:none;gap:8px;overflow-x:auto;margin:0 0 12px;padding-bottom:4px}
+.mobile-tabs .chip{flex:0 0 auto}
+.mobile-list{display:none;flex-direction:column;gap:14px}
+.to-top{position:fixed;right:16px;bottom:24px;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--card);box-shadow:var(--shadow);font-size:20px;line-height:1;cursor:pointer;z-index:30;color:var(--ink)}
 .card{
   background:var(--card);border:1px solid var(--line);border-radius:16px;padding:17px 18px 15px;
   box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;
@@ -127,6 +134,30 @@ footer li{margin:3px 0}
 @media (max-width:900px){
   .columns{grid-template-columns:1fr}
 }
+@media (max-width:760px){
+  .columns{display:none !important}
+  .mobile-tabs{display:flex}
+  .mobile-list{display:flex}
+  header{padding:22px 0 16px}
+  header h1{font-size:24px}
+  header p{font-size:13px;line-height:1.6}
+  .meta-row{gap:6px 14px;font-size:12px}
+  .stats{display:flex;overflow-x:auto;gap:10px;margin-top:-10px;padding-bottom:4px;scrollbar-width:none}
+  .stats::-webkit-scrollbar{display:none}
+  .stat{flex:0 0 126px;padding:12px}
+  .stat b{font-size:21px}
+  .rules{padding:14px 15px;margin-bottom:16px}
+  .rules summary{margin-bottom:10px}
+  .toolbar{gap:10px}
+  .search{flex:1 1 100%;min-width:0}
+  .toolbar .chips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+  .toolbar .chips::-webkit-scrollbar{display:none}
+  .toolbar .chip{flex:0 0 auto;min-height:40px;padding:7px 13px}
+  .count{margin-bottom:10px}
+  .card{padding:14px 15px 13px}
+  .card h3{font-size:15.5px}
+  .summary{-webkit-line-clamp:2}
+}
 @media (max-width:560px){
   html,body{overflow-x:hidden}
   .grid{grid-template-columns:1fr}
@@ -163,8 +194,8 @@ footer li{margin:3px 0}
     <div class="stat"><b id="s-a">0</b><span>A 级核验</span></div>
   </section>
 
-  <section class="rules">
-    <h2>📌 学分速查 <small>据公开资料整理，最终以学生手册与第二课堂系统为准</small></h2>
+  <details class="rules" id="rules" open>
+    <summary>📌 学分速查 <small>据公开资料整理，最终以学生手册与第二课堂系统为准</small></summary>
     <div class="rule-grid">
       <div class="rule"><b>毕业最低总学分</b><span>（学制年数 − 1）× 2</span></div>
       <div class="rule"><b>讲座 / 活动</b><span>0.1 分 / 次，综合素质类累计上限 0.5 分</span></div>
@@ -176,7 +207,7 @@ footer li{margin:3px 0}
       ·
       <a href="http://mp.weixin.qq.com/s?__biz=Mzg4MTU4NjcxOA==&mid=2247508945&idx=2&sn=6e49f73273c8625f64583daea69dacb6" target="_blank" rel="noopener noreferrer">一文读懂本科生第二课堂·志愿服务</a>
     </p>
-  </section>
+  </details>
 
   <div class="toolbar">
     <label class="search">
@@ -225,6 +256,14 @@ footer li{margin:3px 0}
     </div>
   </section>
 
+  <div class="mobile-tabs" id="mobile-tabs" role="group" aria-label="核验等级切换">
+    <button class="chip" data-mlevel="all" aria-pressed="true">全部 <span id="mc-all">0</span></button>
+    <button class="chip" data-mlevel="A" aria-pressed="false">A <span id="mc-A">0</span></button>
+    <button class="chip" data-mlevel="B" aria-pressed="false">B <span id="mc-B">0</span></button>
+    <button class="chip" data-mlevel="C" aria-pressed="false">C <span id="mc-C">0</span></button>
+  </div>
+  <section class="mobile-list" id="mobile-list"></section>
+
   <footer>
     <div class="disclaimer">
       ⚠️ 免责声明：本页为个人整理的信息汇总，非学校官方发布。活动可能变更、延期或取消，报名与学分认定请以主办方最新通知及《本科生实践活动学分手册》、第二课堂线上系统审核结果为准。
@@ -241,6 +280,8 @@ footer li{margin:3px 0}
   </footer>
 </main>
 
+<button class="to-top" id="toTop" aria-label="回到顶部" hidden>↑</button>
+
 <script>
 window.__DEKT_DATA__ = /*__DATA__*/null;
 </script>
@@ -248,7 +289,7 @@ window.__DEKT_DATA__ = /*__DATA__*/null;
 (function () {
   const DATA = window.__DEKT_DATA__ || { items: [], generated_at: "", sources: [] };
   const items = DATA.items || [];
-  const state = { q: "", status: "all", source: "all", time: "30" };
+  const state = { q: "", status: "all", source: "all", time: "30", mlevel: "all" };
   const $ = (id) => document.getElementById(id);
 
   const STATUS_TEXT = { active: "进行中", ended: "已结束", unknown: "待确认" };
@@ -366,18 +407,43 @@ window.__DEKT_DATA__ = /*__DATA__*/null;
   }
 
   const LEVELS = ["A", "B", "C"];
+  const LEVEL_RANK = { A: 3, B: 2, C: 1 };
+  const mobileMQ = window.matchMedia("(max-width: 760px)");
+  const isMobile = () => mobileMQ.matches;
 
   function render() {
     const list = items.filter(matches);
-    let total = 0;
-    LEVELS.forEach((lv) => {
-      const sub = list.filter((i) => (i.source_level || "C") === lv)
-                      .sort((a, b) => (b.publish_date || "").localeCompare(a.publish_date || ""));
-      total += sub.length;
-      $("grid-" + lv).innerHTML = sub.map(card).join("");
-      $("count-" + lv).textContent = sub.length;
-      $("empty-" + lv).hidden = sub.length > 0;
+    const byLevel = { A: [], B: [], C: [] };
+    list.forEach((i) => {
+      const lv = LEVELS.includes(i.source_level) ? i.source_level : "C";
+      byLevel[lv].push(i);
     });
+
+    LEVELS.forEach((lv) => {
+      byLevel[lv].sort((a, b) => (b.publish_date || "").localeCompare(a.publish_date || ""));
+      $("grid-" + lv).innerHTML = byLevel[lv].map(card).join("");
+      $("count-" + lv).textContent = byLevel[lv].length;
+      $("mc-" + lv).textContent = byLevel[lv].length;
+      $("empty-" + lv).hidden = byLevel[lv].length > 0;
+    });
+    $("mc-all").textContent = list.length;
+
+    const mobile = isMobile();
+    $("columns").hidden = mobile;
+    $("mobile-tabs").hidden = !mobile;
+    $("mobile-list").hidden = !mobile;
+    if (mobile) {
+      let mlist = state.mlevel === "all"
+        ? list.slice()
+        : list.filter((i) => (i.source_level || "C") === state.mlevel);
+      mlist.sort((a, b) => {
+        const ra = LEVEL_RANK[a.source_level] || 0;
+        const rb = LEVEL_RANK[b.source_level] || 0;
+        return rb - ra || (b.publish_date || "").localeCompare(a.publish_date || "");
+      });
+      $("mobile-list").innerHTML = mlist.map(card).join("");
+    }
+
     $("notice").hidden = list.length === 0 || list.some((i) => statusOf(i) === "active");
     $("count").textContent = "共 " + list.length + " 条" + (list.length !== items.length ? "（已筛选，总计 " + items.length + " 条）" : "");
     $("s-total").textContent = items.length;
@@ -412,7 +478,28 @@ window.__DEKT_DATA__ = /*__DATA__*/null;
       render();
     });
   });
+  document.querySelectorAll("#mobile-tabs .chip").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      state.mlevel = btn.dataset.mlevel;
+      document.querySelectorAll("#mobile-tabs .chip").forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+      render();
+    });
+  });
   $("q").addEventListener("input", (e) => { state.q = e.target.value.trim(); render(); });
+
+  function syncViewport() {
+    $("rules").open = !isMobile();
+    render();
+  }
+  if (mobileMQ.addEventListener) mobileMQ.addEventListener("change", syncViewport);
+  else if (mobileMQ.addListener) mobileMQ.addListener(syncViewport);
+  $("rules").open = !isMobile();
+
+  const toTop = $("toTop");
+  window.addEventListener("scroll", () => {
+    toTop.hidden = window.scrollY < 400;
+  }, { passive: true });
+  toTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 
   $("updated").textContent = DATA.generated_at ? fmtDate(DATA.generated_at) : "尚未生成";
   $("gen").textContent = DATA.generated_at || "—";
