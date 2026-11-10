@@ -41,8 +41,11 @@ header p{margin:0;opacity:.82;font-size:14px;max-width:720px}
 
 /* rules */
 .rules{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:22px;box-shadow:var(--shadow)}
-.rules h2{font-size:15px;margin:0 0 12px;display:flex;align-items:center;gap:8px}
+.rules h2{font-size:15px;margin:0 0 12px;display:flex;align-items:center;gap:8px;cursor:pointer}
 .rules h2 small{font-weight:400;color:var(--muted);font-size:12.5px}
+.rules-chev{margin-left:auto;font-size:12px;color:var(--muted);transition:.15s}
+.rules.collapsed .rules-body{display:none}
+.rules.collapsed .rules-chev{transform:rotate(-90deg)}
 .rule-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
 .rule{background:#fbfcf9;border:1px solid var(--line);border-radius:12px;padding:12px 14px}
 .rule b{display:block;font-size:13px;color:var(--muted);font-weight:600;margin-bottom:3px}
@@ -196,7 +199,8 @@ footer li{margin:3px 0}
   </section>
 
   <section class="rules" id="rules">
-    <h2>📌 学分速查 <small>据公开资料整理，最终以学生手册与第二课堂系统为准</small></h2>
+    <h2 id="rulesToggle">📌 学分速查 <small>据公开资料整理，最终以学生手册与第二课堂系统为准</small><span class="rules-chev">▾</span></h2>
+    <div class="rules-body" id="rulesBody">
     <div class="rule-grid">
       <div class="rule"><b>毕业最低总学分</b><span>（学制年数 − 1）× 2</span></div>
       <div class="rule"><b>讲座 / 活动</b><span>0.1 分 / 次，综合素质类累计上限 0.5 分</span></div>
@@ -208,6 +212,7 @@ footer li{margin:3px 0}
       ·
       <a href="http://mp.weixin.qq.com/s?__biz=Mzg4MTU4NjcxOA==&mid=2247508945&idx=2&sn=6e49f73273c8625f64583daea69dacb6" target="_blank" rel="noopener noreferrer">一文读懂本科生第二课堂·志愿服务</a>
     </p>
+    </div>
   </section>
 
   <div class="toolbar">
@@ -489,10 +494,13 @@ window.__DEKT_DATA__ = /*__DATA__*/null;
   $("q").addEventListener("input", (e) => { state.q = e.target.value.trim(); render(); });
 
   function syncViewport() {
+    $("rules").classList.toggle("collapsed", isMobile());
     render();
   }
   if (mobileMQ.addEventListener) mobileMQ.addEventListener("change", syncViewport);
   else if (mobileMQ.addListener) mobileMQ.addListener(syncViewport);
+  $("rulesToggle").addEventListener("click", () => $("rules").classList.toggle("collapsed"));
+  $("rules").classList.toggle("collapsed", isMobile());
 
   const toTop = $("toTop");
   window.addEventListener("scroll", () => {

@@ -13,7 +13,6 @@ PATHS = [
     "data/manual.json",
     "scripts",
     "site/template.html",
-    ".github",
     ".gitignore",
     "README.md",
 ]
