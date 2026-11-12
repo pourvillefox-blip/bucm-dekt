@@ -71,7 +71,7 @@ def check_data_freshness(cfg: dict) -> tuple[bool, str]:
 
 def check_sources() -> tuple[bool, str]:
     counts = {}
-    names = ["official.json", "wechat.json", "manual.json"]
+    names = ["official.json", "manual.json"]
     if (DATA_DIR / "rss.json").exists():
         names.append("rss.json")
     for name in names:

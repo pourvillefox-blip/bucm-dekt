@@ -115,18 +115,16 @@ def main() -> None:
         return items
 
     official = load_source("official.json")
-    wechat = load_source("wechat.json")
     rss = load_source("rss.json")
     manual = load_source("manual.json")
-    log.info("读入 官网 %d 条 / 公众号 %d 条 / RSS %d 条 / 人工 %d 条",
-             len(official), len(wechat), len(rss), len(manual))
+    log.info("读入 官网 %d 条 / RSS %d 条 / 人工 %d 条",
+             len(official), len(rss), len(manual))
 
-    items = [x for x in (normalize(i, today) for i in official + wechat + rss + manual) if x]
+    items = [x for x in (normalize(i, today) for i in official + rss + manual) if x]
     items = dedupe(items)
     items.sort(key=sort_key, reverse=True)
 
     sources = [s["name"] for s in cfg.get("official_sources", [])]
-    sources.append("微信公众号（搜狗微信检索，仅作线索）")
     if rss:
         sources.append("微信公众号 RSS（Wechat2RSS / WeRSS）")
     sources.append("人工核验补充（公众号原文）")

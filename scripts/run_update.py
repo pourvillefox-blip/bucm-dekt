@@ -82,7 +82,6 @@ def main() -> int:
         run("backup.py", required=False, timeout=120)
         saved = backup()
         run("crawl_official.py", required=True)
-        run("crawl_wechat.py", required=False)
         run("crawl_rss.py", required=False)
         run("build_site.py", required=True)
 
