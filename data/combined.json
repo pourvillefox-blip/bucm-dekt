@@ -1,8 +1,26 @@
 {
-  "generated_at": "2026-11-15 15:30",
+  "generated_at": "2026-11-15 21:30",
   "cutoff_date": "2025-09-01",
-  "count": 55,
+  "count": 57,
   "items": [
+    {
+      "title": "【岐黄·招募】11.19良乡图书馆大师剧演出志愿者",
+      "account": "岐黄志愿者之家",
+      "publish_date": "2026-11-15",
+      "url": "https://mp.weixin.qq.com/s/slNHlAJYG3naYqSl2tfiMA",
+      "summary": "",
+      "credit": null,
+      "credit_type": "志愿服务",
+      "deadline": null,
+      "status": "active",
+      "source_level": "C",
+      "source_type": "rss",
+      "evidence": "",
+      "link_ok": true,
+      "checked_at": "2026-11-15",
+      "verified_at": "2026-11-15",
+      "id": "a98acb9e666e"
+    },
     {
       "title": "【岐黄·先声】北京中医药大学第10周志愿活动预告",
       "account": "岐黄志愿者之家",
@@ -56,6 +74,24 @@
       "checked_at": "2026-11-15",
       "verified_at": "2026-11-15",
       "id": "0cb453d88ae9"
+    },
+    {
+      "title": "正式开班！北中医&美国史蒂文斯理工学院合作办学，为健康时代而来！",
+      "account": "北京中医药大学",
+      "publish_date": "2026-11-15",
+      "url": "https://mp.weixin.qq.com/s/jQBopVrVKlv5cw6UDzWHsQ",
+      "summary": "11月14日，北京中医药大学与美国史蒂文斯理工学院国际合作办学项目——“医疗健康领导力与管理专业硕士项目”开班仪式在和平街校区举行。我校副校长丁霞，中央财经大学教授陈俊华，我校国际合作处副处长安超，管理学院 党委书记李蔓荻、 院长李瑞锋、副院长石学峰、党委副书记周磊，首届班主任姚园，授课副教授赵丽颖参加开班仪式。开班仪式由项目执行负责人石学峰副院长主持。 0",
+      "credit": null,
+      "credit_type": "学术科技",
+      "deadline": null,
+      "status": "unknown",
+      "source_level": "A",
+      "source_type": "rss",
+      "evidence": "",
+      "link_ok": true,
+      "checked_at": "2026-11-15",
+      "verified_at": "2026-11-15",
+      "id": "5e8237848470"
     },
     {
       "title": "【岐黄·权益】第五次志愿者通识教育考核结果公示",
