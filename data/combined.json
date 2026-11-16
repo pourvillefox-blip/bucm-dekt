@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-11-16 15:30",
+  "generated_at": "2026-11-16 21:30",
   "cutoff_date": "2025-09-01",
-  "count": 57,
+  "count": 58,
   "items": [
     {
       "title": "【岐黄·招募】11.19良乡图书馆大师剧演出志愿者",
@@ -74,6 +74,24 @@
       "checked_at": "2026-11-16",
       "verified_at": "2026-11-16",
       "id": "0cb453d88ae9"
+    },
+    {
+      "title": "【社联｜社团文化月】校团委举办第十三届社团文化月开幕式",
+      "account": "bucm社联",
+      "publish_date": "2026-11-16",
+      "url": "https://mp.weixin.qq.com/s/gAut0NE_iiYP8Ypi8OBF5w",
+      "summary": "",
+      "credit": null,
+      "credit_type": "社团活动",
+      "deadline": null,
+      "status": "unknown",
+      "source_level": "C",
+      "source_type": "rss",
+      "evidence": "",
+      "link_ok": true,
+      "checked_at": "2026-11-16",
+      "verified_at": "2026-11-16",
+      "id": "f51baf732b2d"
     },
     {
       "title": "正式开班！北中医&美国史蒂文斯理工学院合作办学，为健康时代而来！",
