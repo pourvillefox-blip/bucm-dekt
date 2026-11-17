@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-11-17 03:01",
+  "generated_at": "2026-11-17 09:30",
   "cutoff_date": "2025-09-01",
-  "count": 58,
+  "count": 59,
   "items": [
     {
       "title": "【岐黄·招募】11.19良乡图书馆大师剧演出志愿者",
@@ -74,6 +74,24 @@
       "checked_at": "2026-11-17",
       "verified_at": "2026-11-17",
       "id": "0cb453d88ae9"
+    },
+    {
+      "title": "【岐黄·先声】一封关于2026年“志愿文化月”的邀请函",
+      "account": "岐黄志愿者之家",
+      "publish_date": "2026-11-17",
+      "url": "https://mp.weixin.qq.com/s/KrWMWAHGENwM7CqRSIxy1w",
+      "summary": "",
+      "credit": null,
+      "credit_type": "志愿服务",
+      "deadline": null,
+      "status": "unknown",
+      "source_level": "C",
+      "source_type": "rss",
+      "evidence": "",
+      "link_ok": true,
+      "checked_at": "2026-11-17",
+      "verified_at": "2026-11-17",
+      "id": "ac8de0e6fbcc"
     },
     {
       "title": "【社联｜社团文化月】校团委举办第十三届社团文化月开幕式",
