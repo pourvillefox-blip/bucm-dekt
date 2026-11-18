@@ -3,6 +3,8 @@ from __future__ import annotations
 
 import json
 import re
+import shutil
+import subprocess
 import sys
 import time
 import urllib.request
@@ -154,12 +156,21 @@ def check_werss(cfg: dict) -> tuple[bool, str]:
     return True, "WeRSS 正常，微信读书已授权"
 
 
-def check_remote(cfg: dict, local_count: int) -> tuple[bool, str]:
-    url = (cfg.get("site_url") or "").strip()
-    if not url:
-        return True, "未配置 site_url，跳过线上检查"
+def _fetch_url(url: str) -> str:
+    """优先用 curl（对 GitHub Pages 的 TLS 更稳），失败再退回 urllib。"""
+    curl = shutil.which("curl") or shutil.which("curl.exe")
+    if curl:
+        try:
+            proc = subprocess.run(
+                [curl, "-sSL", "--max-time", "25", "-H", "Cache-Control: no-cache", url],
+                capture_output=True,
+            )
+            if proc.returncode == 0 and proc.stdout:
+                return proc.stdout.decode("utf-8", "ignore")
+        except Exception:  # noqa: BLE001
+            pass
+
     last_exc: Exception | None = None
-    body = ""
     for attempt in range(3):
         try:
             req = urllib.request.Request(url, headers={
@@ -168,15 +179,22 @@ def check_remote(cfg: dict, local_count: int) -> tuple[bool, str]:
                 "Pragma": "no-cache",
             })
             with urllib.request.urlopen(req, timeout=25) as resp:
-                body = resp.read().decode("utf-8", "ignore")
-            last_exc = None
-            break
+                return resp.read().decode("utf-8", "ignore")
         except Exception as exc:  # noqa: BLE001
             last_exc = exc
             if attempt < 2:
                 time.sleep(3)
-    if last_exc is not None:
-        return False, f"线上页面无法访问：{last_exc}"
+    raise last_exc or RuntimeError("fetch failed")
+
+
+def check_remote(cfg: dict, local_count: int) -> tuple[bool, str]:
+    url = (cfg.get("site_url") or "").strip()
+    if not url:
+        return True, "未配置 site_url，跳过线上检查"
+    try:
+        body = _fetch_url(url)
+    except Exception as exc:  # noqa: BLE001
+        return False, f"线上页面无法访问：{exc}"
     if MARKER not in body:
         return False, "线上页面内容异常（缺少标记）"
     data = parse_payload(body)
