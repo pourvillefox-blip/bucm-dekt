@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-11-18 09:30",
+  "generated_at": "2026-11-18 15:30",
   "cutoff_date": "2025-09-01",
-  "count": 59,
+  "count": 60,
   "items": [
     {
       "title": "【岐黄·招募】11.19良乡图书馆大师剧演出志愿者",
@@ -74,6 +74,24 @@
       "checked_at": "2026-11-18",
       "verified_at": "2026-11-18",
       "id": "0cb453d88ae9"
+    },
+    {
+      "title": "校学生会成功举办“弦歌不辍芳华待灼”青年追梦企划比赛",
+      "account": "北京中医药大学学生会",
+      "publish_date": "2026-11-18",
+      "url": "https://mp.weixin.qq.com/s/KfddbXsRFfeTstskzxgn0Q",
+      "summary": "校学生会成功举办“弦歌不辍 芳华待灼”青年追梦企划比赛",
+      "credit": null,
+      "credit_type": "综合素质",
+      "deadline": null,
+      "status": "unknown",
+      "source_level": "C",
+      "source_type": "rss",
+      "evidence": "",
+      "link_ok": true,
+      "checked_at": "2026-11-18",
+      "verified_at": "2026-11-18",
+      "id": "fd7c0b990025"
     },
     {
       "title": "【岐黄·先声】一封关于2026年“志愿文化月”的邀请函",
