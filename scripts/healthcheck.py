@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import re
 import sys
+import time
 import urllib.request
 from datetime import datetime, timedelta
 from urllib.parse import urlencode
@@ -157,16 +158,25 @@ def check_remote(cfg: dict, local_count: int) -> tuple[bool, str]:
     url = (cfg.get("site_url") or "").strip()
     if not url:
         return True, "未配置 site_url，跳过线上检查"
-    try:
-        req = urllib.request.Request(url, headers={
-            "User-Agent": UA,
-            "Cache-Control": "no-cache",
-            "Pragma": "no-cache",
-        })
-        with urllib.request.urlopen(req, timeout=25) as resp:
-            body = resp.read().decode("utf-8", "ignore")
-    except Exception as exc:  # noqa: BLE001
-        return False, f"线上页面无法访问：{exc}"
+    last_exc: Exception | None = None
+    body = ""
+    for attempt in range(3):
+        try:
+            req = urllib.request.Request(url, headers={
+                "User-Agent": UA,
+                "Cache-Control": "no-cache",
+                "Pragma": "no-cache",
+            })
+            with urllib.request.urlopen(req, timeout=25) as resp:
+                body = resp.read().decode("utf-8", "ignore")
+            last_exc = None
+            break
+        except Exception as exc:  # noqa: BLE001
+            last_exc = exc
+            if attempt < 2:
+                time.sleep(3)
+    if last_exc is not None:
+        return False, f"线上页面无法访问：{last_exc}"
     if MARKER not in body:
         return False, "线上页面内容异常（缺少标记）"
     data = parse_payload(body)
