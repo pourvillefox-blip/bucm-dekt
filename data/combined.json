@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-11-22 21:30",
+  "generated_at": "2026-11-23 03:01",
   "cutoff_date": "2025-09-01",
-  "count": 58,
+  "count": 57,
   "items": [
     {
       "title": "【岐黄·招募】11.19良乡图书馆大师剧演出志愿者",
@@ -17,27 +17,9 @@
       "source_type": "rss",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-22",
-      "verified_at": "2026-11-22",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "a98acb9e666e"
-    },
-    {
-      "title": "学工部、一站式学生社区组织学生参加“119”消防救援科技文化节暨校园开放日活动",
-      "account": "学生工作部·新闻动态",
-      "publish_date": "2026-11-10",
-      "url": "https://xuegongbu.bucm.edu.cn/fdyjd/xwdt/442a8f96baba4c31b0934fa7083eacd1.htm",
-      "summary": "为深入贯彻“全民消防、生命至上”理念，进一步增强学生消防安全意识，提升应急自救与防灾避险能力，在第35个全国消防日来临之际，11月7日，学工部一站式学生社区组织30余名学生代表赴中国消防救援学院，参加“119”消防救援科技文化节暨校园开放日活动。 活动中，学生代表参观了AI赋能消防救援科技成果展，近距离观摩火灾智能感知设备、消防机器人、应急无人机、单兵智能终",
-      "credit": null,
-      "credit_type": "综合素质",
-      "deadline": null,
-      "status": "active",
-      "source_level": "C",
-      "source_type": "official",
-      "evidence": "",
-      "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
-      "id": "57da19aed6ac"
     },
     {
       "title": "【岐黄·先声】北京中医药大学第10周志愿活动预告",
@@ -53,8 +35,8 @@
       "source_type": "rss",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-22",
-      "verified_at": "2026-11-22",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "5dd6a400fb51"
     },
     {
@@ -71,8 +53,8 @@
       "source_type": "rss",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-22",
-      "verified_at": "2026-11-22",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "7d52aa8ce54a"
     },
     {
@@ -89,9 +71,27 @@
       "source_type": "rss",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-22",
-      "verified_at": "2026-11-22",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "0cb453d88ae9"
+    },
+    {
+      "title": "【岐黄·时事】志愿携手做 | 杏林春暖七秩情，岐黄薪火暖夕阳",
+      "account": "岐黄志愿者之家",
+      "publish_date": "2026-11-23",
+      "url": "https://mp.weixin.qq.com/s/FhcfBjenxAWmkb3oT4Q7BA",
+      "summary": "",
+      "credit": null,
+      "credit_type": "志愿服务",
+      "deadline": null,
+      "status": "unknown",
+      "source_level": "C",
+      "source_type": "rss",
+      "evidence": "",
+      "link_ok": true,
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
+      "id": "973a03d1b599"
     },
     {
       "title": "【岐黄·时事】岐黄志愿者协会志愿文化月外场活动圆满收官",
@@ -107,8 +107,8 @@
       "source_type": "rss",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-22",
-      "verified_at": "2026-11-22",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "ffedbca5aead"
     },
     {
@@ -125,8 +125,8 @@
       "source_type": "rss",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-22",
-      "verified_at": "2026-11-22",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "fd7c0b990025"
     },
     {
@@ -143,8 +143,8 @@
       "source_type": "rss",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-22",
-      "verified_at": "2026-11-22",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "ac8de0e6fbcc"
     },
     {
@@ -161,8 +161,8 @@
       "source_type": "rss",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-22",
-      "verified_at": "2026-11-22",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "f51baf732b2d"
     },
     {
@@ -179,8 +179,8 @@
       "source_type": "rss",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-22",
-      "verified_at": "2026-11-22",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "5e8237848470"
     },
     {
@@ -197,8 +197,8 @@
       "source_type": "rss",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-22",
-      "verified_at": "2026-11-22",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "bd860b0b115a"
     },
     {
@@ -215,9 +215,27 @@
       "source_type": "rss",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-22",
-      "verified_at": "2026-11-22",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "24586e6def84"
+    },
+    {
+      "title": "2026年“暖心相遇，沐光同行”心理嘉年华主题日活动在良乡校区温暖启幕",
+      "account": "学生工作部·新闻动态",
+      "publish_date": "2026-11-10",
+      "url": "https://xuegongbu.bucm.edu.cn/xljk/zxdt1/d63b00e9cfea44f19ab8c5ca3c25a5fb.htm",
+      "summary": "为深入落实立德树人根本任务，践行“健康第一”教育理念，进一步发挥中医药特色优势，提升学生心理健康素养，11月4日至6日，2026年“暖心相遇，沐光同行”心理嘉年华主题日活动在良乡校区东院学生活动中心对面举办。本次活动由学生工作部大学生心理健康教育与咨询中心、各学院心理辅导站、一站式学生社区、校心理协会共同举办，为期三天的活动得到在校学子积极响应、踊跃参与，秋",
+      "credit": null,
+      "credit_type": "综合素质",
+      "deadline": null,
+      "status": "unknown",
+      "source_level": "C",
+      "source_type": "official",
+      "evidence": "",
+      "link_ok": true,
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
+      "id": "cec3600b6db3"
     },
     {
       "title": "北京中医药大学第四期“杏林青马”团学青年主题沙龙来啦！",
@@ -233,8 +251,8 @@
       "source_type": "rss",
       "evidence": "其余参加同学可给予 第二课堂综合素质0.1分 的加分。",
       "link_ok": true,
-      "checked_at": "2026-11-22",
-      "verified_at": "2026-11-22",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "0dba91f2dc25"
     },
     {
@@ -251,8 +269,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "547c06eb1d55"
     },
     {
@@ -269,8 +287,8 @@
       "source_type": "rss",
       "evidence": "加量化分：一等奖人均加 0.1 量化分，二等奖人均加 0.05 量化分，三等奖人均加 0.025 量化分 第二课堂学分加分： 凡报名成功、经审核符合活动要求的团队:其成员均可获得第二课堂综合素质模块 0.1 分 一等奖礼品 二等奖礼品 热烈欢迎同学们的参与~~ 快来扫描下方二维码了解详情吧！ 微信群 报名问卷星 -EN",
       "link_ok": true,
-      "checked_at": "2026-11-22",
-      "verified_at": "2026-11-22",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "6c5bd45baf5c"
     },
     {
@@ -287,8 +305,8 @@
       "source_type": "rss",
       "evidence": "化，请以当天现场为准~ 招募！现场观众 本次开幕式观众招募上限为150人，通过下方问卷扫码报名， 截止时间为11月7日18：00，名额先到先得哦~ 线下参加社团文化月开幕式可获得第二课堂综合素质0.1学分哦~ 报名完成可扫描下方二维码进入招新群关注后续活动通知，观众名单后续也将在群里发布哦~ 往期回顾 旧岁沙龙留影，时",
       "link_ok": true,
-      "checked_at": "2026-11-22",
-      "verified_at": "2026-11-22",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "57bd53a86b9f"
     },
     {
@@ -305,8 +323,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "e725c54e57e1"
     },
     {
@@ -323,8 +341,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "e92b5edf1693"
     },
     {
@@ -341,8 +359,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "079a312dfab9"
     },
     {
@@ -359,8 +377,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "2289ff1161ea"
     },
     {
@@ -377,8 +395,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "2056ed048054"
     },
     {
@@ -395,8 +413,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "67dc3cfe58c0"
     },
     {
@@ -413,8 +431,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "7e79a26ba3e5"
     },
     {
@@ -431,8 +449,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "f45b99cecbbc"
     },
     {
@@ -449,27 +467,9 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "a0cb9f960f0a"
-    },
-    {
-      "title": "校团委举办“巧手雕琢千年非遗风华，初心奔赴万里前程山海”毕业季非遗体验活动",
-      "account": "校团委·新闻动态",
-      "publish_date": "2026-06-22",
-      "url": "https://tuanwei.bucm.edu.cn/qnzx/xwllk/8d9fcd1834254729a1eb340cbdf1c9e7.htm",
-      "summary": "为厚植青年传统文化底蕴，以非遗文化赋能毕业育人，让学子带走校园温情、传承中华文脉。6月18日上午，校团委于良乡校区东院食堂对面，开展“巧手雕琢千年非遗风华，初心奔赴万里前程山海”毕业季非遗体验活动。本次活动汇聚特色非遗手工项目，吸引全校300余人次毕业生到场沉浸式体验、打卡留念，在指尖非遗匠心里定格专属毕业记忆。 本次活动甄选北京绢花、宋锦、掐丝珐琅三项京派",
-      "credit": null,
-      "credit_type": "综合素质",
-      "deadline": null,
-      "status": "unknown",
-      "source_level": "C",
-      "source_type": "official",
-      "evidence": "",
-      "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
-      "id": "6ec79e1ba979"
     },
     {
       "title": "经验引航学业筑基——中医学院组织系列学业帮扶活动",
@@ -485,8 +485,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "e9a9460cac4a"
     },
     {
@@ -503,8 +503,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "15c42ba347c3"
     },
     {
@@ -521,8 +521,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "8f5bdd61a524"
     },
     {
@@ -539,8 +539,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "0326471e6fd9"
     },
     {
@@ -557,8 +557,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "8223431f656f"
     },
     {
@@ -575,8 +575,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "485687f6617c"
     },
     {
@@ -593,8 +593,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "37c7f9ee4eb7"
     },
     {
@@ -611,8 +611,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "0e7ae6b9ffd7"
     },
     {
@@ -629,8 +629,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "34e8c079401b"
     },
     {
@@ -647,8 +647,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "4036589be253"
     },
     {
@@ -665,8 +665,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "bce4b9a413fc"
     },
     {
@@ -683,8 +683,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "a22e09e86dee"
     },
     {
@@ -701,8 +701,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "62c0926aeb4b"
     },
     {
@@ -719,8 +719,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "711f28887a97"
     },
     {
@@ -737,8 +737,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "51e0489df181"
     },
     {
@@ -755,8 +755,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "7f78e4007c74"
     },
     {
@@ -773,8 +773,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "42306f7a0a87"
     },
     {
@@ -791,8 +791,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "9d7de6dbfb19"
     },
     {
@@ -809,8 +809,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "0fce54dbc87b"
     },
     {
@@ -827,8 +827,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "86f68e907be0"
     },
     {
@@ -845,27 +845,9 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "62543bc23c0c"
-    },
-    {
-      "title": "中医学院赴广州参加京广中医药博士后论坛暨十五五规划调研",
-      "account": "中医学院·学工动态",
-      "publish_date": "2026-04-27",
-      "url": "https://jichu.bucm.edu.cn/xstd/xgdt/9015b2dfe4c944c2894b52a58a3f47e6.htm",
-      "summary": "月24日，中医学院党委书记李峰带队赴广州中医药大学，京广中医药博士后论坛暨博士就业直通车系列活动、同步开展 “十五五” 规划专题调研，副院长盖聪及师生代表全程参与本次活动。",
-      "credit": null,
-      "credit_type": "讲座活动",
-      "deadline": null,
-      "status": "unknown",
-      "source_level": "C",
-      "source_type": "official",
-      "evidence": "",
-      "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
-      "id": "1d5752a00fb9"
     },
     {
       "title": "校团委举办第二十二届“巅峰战将营”社团嘉年华活动",
@@ -881,8 +863,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "310493c37df0"
     },
     {
@@ -899,8 +881,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "d4fd1dac12bb"
     },
     {
@@ -917,8 +899,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "365834f42a14"
     },
     {
@@ -935,8 +917,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "9f86c3d9d29d"
     },
     {
@@ -953,8 +935,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "ceac30413a84"
     },
     {
@@ -971,8 +953,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "82a9b6e2de3f"
     },
     {
@@ -989,8 +971,8 @@
       "source_type": "official",
       "evidence": "",
       "link_ok": true,
-      "checked_at": "2026-11-20",
-      "verified_at": "2026-11-20",
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
       "id": "9c8f8fec50b8"
     },
     {
