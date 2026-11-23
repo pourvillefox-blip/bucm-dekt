@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-11-23 15:30",
+  "generated_at": "2026-11-23 21:30",
   "cutoff_date": "2025-09-01",
-  "count": 58,
+  "count": 60,
   "items": [
     {
       "title": "建校70周年教育教学系列活动讲座预告丨杨桢教授《阴火论在脾胃病辨治中的应用》",
@@ -20,6 +20,24 @@
       "checked_at": "2026-11-23",
       "verified_at": "2026-11-23",
       "id": "c5d9781cd4ee"
+    },
+    {
+      "title": "【学生团体部｜活动预告】11月23日~11月29日活动预告来啦~",
+      "account": "bucm社联",
+      "publish_date": "2026-11-23",
+      "url": "https://mp.weixin.qq.com/s/X7wbkcphFtTewSqcupNa3A",
+      "summary": "",
+      "credit": null,
+      "credit_type": "综合素质",
+      "deadline": null,
+      "status": "active",
+      "source_level": "C",
+      "source_type": "rss",
+      "evidence": "",
+      "link_ok": true,
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
+      "id": "df3ed494e576"
     },
     {
       "title": "【岐黄·招募】11.19良乡图书馆大师剧演出志愿者",
@@ -92,6 +110,24 @@
       "checked_at": "2026-11-23",
       "verified_at": "2026-11-23",
       "id": "0cb453d88ae9"
+    },
+    {
+      "title": "岐黄学院成功举办首届“丹心杯”职业规划大赛院赛",
+      "account": "岐黄青年汇",
+      "publish_date": "2026-11-23",
+      "url": "https://mp.weixin.qq.com/s/YAZyTAP1_qutlIMYmSkjOg",
+      "summary": "",
+      "credit": null,
+      "credit_type": "学术科技",
+      "deadline": null,
+      "status": "unknown",
+      "source_level": "C",
+      "source_type": "rss",
+      "evidence": "",
+      "link_ok": true,
+      "checked_at": "2026-11-23",
+      "verified_at": "2026-11-23",
+      "id": "013ac73a1ed1"
     },
     {
       "title": "【岐黄·时事】志愿携手做 | 杏林春暖七秩情，岐黄薪火暖夕阳",
