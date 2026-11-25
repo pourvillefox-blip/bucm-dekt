@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-11-25 15:30",
+  "generated_at": "2026-11-25 21:30",
   "cutoff_date": "2025-09-01",
-  "count": 60,
+  "count": 61,
   "items": [
     {
       "title": "建校70周年教育教学系列活动讲座预告丨杨桢教授《阴火论在脾胃病辨治中的应用》",
@@ -56,6 +56,24 @@
       "checked_at": "2026-11-25",
       "verified_at": "2026-11-25",
       "id": "a98acb9e666e"
+    },
+    {
+      "title": "【学生团体部丨微电影大赛】微电影大赛开始投票啦！",
+      "account": "bucm社联",
+      "publish_date": "2026-11-25",
+      "url": "https://mp.weixin.qq.com/s/ryqGaZm4SZMKPsgooMvK9A",
+      "summary": "",
+      "credit": null,
+      "credit_type": "学术科技",
+      "deadline": null,
+      "status": "unknown",
+      "source_level": "C",
+      "source_type": "rss",
+      "evidence": "",
+      "link_ok": true,
+      "checked_at": "2026-11-25",
+      "verified_at": "2026-11-25",
+      "id": "b6eb345cb27a"
     },
     {
       "title": "岐黄学院成功举办首届“丹心杯”职业规划大赛院赛",
