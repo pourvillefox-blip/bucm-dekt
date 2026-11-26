@@ -143,17 +143,32 @@ def check_werss(cfg: dict) -> tuple[bool, str]:
             headers={"Content-Type": "application/x-www-form-urlencoded"})
         with opener.open(req, timeout=20) as resp:
             token = json.loads(resp.read().decode("utf-8"))["data"]["access_token"]
+        mp_id = ""
+        for feed in rss.get("feeds", []):
+            m = re.search(r"/(MP_WXS_[^.]+)\.xml", feed.get("url", ""))
+            if m:
+                mp_id = m.group(1)
+                break
         req = urllib.request.Request(
-            base + "/api/v1/wx/weread/qr/status",
-            headers={"Authorization": "Bearer " + token})
-        with opener.open(req, timeout=20) as resp:
-            status = json.loads(resp.read().decode("utf-8")).get("data", {})
+            base + "/api/v1/wx/weread/mp/test",
+            data=json.dumps({"mp_id": mp_id}).encode("utf-8"),
+            headers={
+                "Authorization": "Bearer " + token,
+                "Content-Type": "application/json",
+            },
+            method="POST",
+        )
+        with opener.open(req, timeout=45) as resp:
+            payload = json.loads(resp.read().decode("utf-8"))
     except Exception as exc:  # noqa: BLE001
         return False, f"WeRSS 不可用：{exc}"
 
-    if not status.get("login_status"):
-        return False, f"微信读书登录态异常：{status.get('msg', '未知')}"
-    return True, "WeRSS 正常，微信读书已授权"
+    if payload.get("code") != 0:
+        return False, f"微信读书采集测试失败：{payload.get('message')}"
+    data = payload.get("data") or {}
+    if int(data.get("article_count") or 0) < 1:
+        return False, "微信读书采集测试未返回文章"
+    return True, f"WeRSS 正常，微信读书采集可用（{data.get('mp_name') or mp_id}）"
 
 
 def _fetch_url(url: str) -> str:

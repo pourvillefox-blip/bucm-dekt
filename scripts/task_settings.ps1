@@ -1,5 +1,5 @@
 $ErrorActionPreference = "Stop"
-$names = @("BUCM-DEKT-Update", "BUCM-DEKT-Health", "BUCM-DEKT-WeChat")
+$names = @("BUCM-DEKT-Update", "BUCM-DEKT-Health", "BUCM-DEKT-WeChat", "WeRSS-KeepAlive")
 foreach ($n in $names) {
     $settings = New-ScheduledTaskSettingsSet `
         -AllowStartIfOnBatteries `
