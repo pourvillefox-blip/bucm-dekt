@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-11-27 15:30",
+  "generated_at": "2026-11-27 21:30",
   "cutoff_date": "2025-09-01",
-  "count": 65,
+  "count": 66,
   "items": [
     {
       "title": "建校70周年教育教学系列活动讲座预告丨杨桢教授《阴火论在脾胃病辨治中的应用》",
@@ -56,6 +56,24 @@
       "checked_at": "2026-11-27",
       "verified_at": "2026-11-27",
       "id": "a98acb9e666e"
+    },
+    {
+      "title": "中医学“101计划”成长伙伴第二期沙龙活动来啦！",
+      "account": "岐黄青年汇",
+      "publish_date": "2026-11-27",
+      "url": "https://mp.weixin.qq.com/s/xuSUpuuobIllDNFQnsQ48A",
+      "summary": "",
+      "credit": null,
+      "credit_type": "讲座活动",
+      "deadline": null,
+      "status": "unknown",
+      "source_level": "C",
+      "source_type": "rss",
+      "evidence": "",
+      "link_ok": true,
+      "checked_at": "2026-11-27",
+      "verified_at": "2026-11-27",
+      "id": "aa16ecaca8f7"
     },
     {
       "title": "【学生团体部｜社团文化月】叮！音舞展演加载完毕，准备赴约~",
